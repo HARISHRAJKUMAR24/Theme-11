@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Tract | Login · Earth-Conscious Account</title>
+    <!-- Tailwind CSS + Font Awesome (exactly matching main style) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Custom scroll + earthy tones (same as main Tract site) */
+        * {
+            -webkit-tap-highlight-color: transparent;
+        }
+        body {
+            background: #f4f2ef;
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+        }
+        ::-webkit-scrollbar {
+            width: 5px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #e7e2db;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #bc6c25;
+            border-radius: 10px;
+        }
+        .input-focus:focus {
+            border-color: #bc6c25;
+            box-shadow: 0 0 0 3px rgba(188,108,37,0.15);
+            outline: none;
+        }
+        .btn-login {
+            background: linear-gradient(95deg, #bc6c25, #e8a735);
+            transition: all 0.2s ease;
+        }
+        .btn-login:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px -8px rgba(188,108,37,0.5);
+        }
+        .guest-btn {
+            transition: all 0.2s ease;
+        }
+        .guest-btn:hover {
+            background: #fef4ea;
+            border-color: #bc6c25;
+        }
+        .auth-card {
+            border-radius: 2rem;
+            border: 1px solid #f0e2d4;
+            box-shadow: 0 25px 40px -12px rgba(0, 0, 0, 0.2);
+        }
+    </style>
+</head>
+<body class="flex items-center justify-center min-h-screen p-4 md:p-6">
+
+    <div class="w-full max-w-[460px] mx-auto">
+        <!-- LOGIN CARD (SEPARATE PAGE) -->
+        <div class="bg-white rounded-3xl auth-card overflow-hidden shadow-2xl">
+            
+            <!-- header with tract branding & leaf icon (cohesive) -->
+            <div class="relative px-6 pt-8 pb-5 text-center border-b border-[#f0e2d4] bg-gradient-to-r from-[#fefbf7] to-white">
+                <div class="flex justify-center mb-3">
+                    <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-[#bc6c25]/20 to-[#e8a735]/20 flex items-center justify-center shadow-sm">
+                        <i class="fas fa-leaf text-[#bc6c25] text-2xl"></i>
+                    </div>
+                </div>
+                <h1 class="text-3xl font-extrabold tracking-tight text-[#2c241a]">tract<span class="text-[#bc6c25]">.</span></h1>
+                <p class="text-[11px] uppercase tracking-[0.2em] text-[#8a7a66] font-semibold mt-1">earth‑conscious goods</p>
+            </div>
+
+            <!-- LOGIN FORM SECTION -->
+            <div class="p-6 md:p-7">
+                <div class="text-center mb-6">
+                    <h2 class="text-2xl font-bold text-[#2c241a]">Welcome back</h2>
+                    <p class="text-sm text-[#8a7a66] mt-1">Sign in to explore sustainable gear</p>
+                </div>
+
+                <form id="loginForm" class="space-y-5">
+                    <!-- Email or Phone input (one field, handles both) -->
+                    <div>
+                        <label class="block text-xs font-semibold text-[#4b3621] mb-1.5 tracking-wide">
+                            <i class="far fa-envelope mr-1 text-[#bc6c25]"></i> Email or Phone
+                        </label>
+                        <input type="text" id="loginIdentifier" placeholder="hello@tract.com  |  +1 555 123 4567" 
+                            class="w-full border border-[#e8e2db] rounded-2xl py-3.5 px-4 text-sm bg-[#fefcf9] transition-all input-focus">
+                        <p class="text-[10px] text-red-500 mt-1 hidden" id="loginIdError">* Email or phone required</p>
+                    </div>
+
+                    <!-- Password field with show/hide -->
+                    <div>
+                        <label class="block text-xs font-semibold text-[#4b3621] mb-1.5 tracking-wide">
+                            <i class="fas fa-lock mr-1 text-[#bc6c25]"></i> Password
+                        </label>
+                        <div class="relative">
+                            <input type="password" id="loginPassword" placeholder="••••••••" 
+                                class="w-full border border-[#e8e2db] rounded-2xl py-3.5 px-4 text-sm bg-[#fefcf9] transition-all input-focus pr-11">
+                            <button type="button" id="toggleLoginPw" class="absolute right-3 top-1/2 -translate-y-1/2 text-[#a08c72] hover:text-[#bc6c25] transition">
+                                <i class="far fa-eye-slash text-sm"></i>
+                            </button>
+                        </div>
+                        <p class="text-[10px] text-red-500 mt-1 hidden" id="loginPassError">* Password is required</p>
+                    </div>
+
+                    <!-- forgot password & row -->
+                    <div class="flex justify-end">
+                        <a href="#" id="forgotPwLink" class="text-[11px] text-[#bc6c25] hover:underline font-medium">Forgot password?</a>
+                    </div>
+
+                    <!-- Submit button -->
+                    <button type="submit" class="btn-login w-full rounded-full py-3.5 text-white font-bold text-sm shadow-md flex items-center justify-center gap-2 transition-all">
+                        <i class="fas fa-sign-in-alt text-xs"></i> Log in to Tract
+                    </button>
+                </form>
+
+                <!-- Divider -->
+                <div class="flex items-center my-6">
+                    <div class="flex-1 h-px bg-[#e8e2db]"></div>
+                    <span class="px-3 text-[10px] text-[#a28f76] font-medium">or continue as guest</span>
+                    <div class="flex-1 h-px bg-[#e8e2db]"></div>
+                </div>
+
+                <!-- Guest button -->
+                <button id="guestShopBtn" class="guest-btn w-full rounded-full py-3.5 border border-[#bc6c25]/40 text-[#bc6c25] font-semibold text-sm bg-white hover:bg-[#fef4ea] transition flex items-center justify-center gap-2">
+                    <i class="fas fa-store"></i> Continue Shopping (Guest)
+                </button>
+
+                <!-- Register redirect callout -->
+                <div class="mt-6 text-center">
+                    <p class="text-sm text-[#6b5a48]">New to tract? 
+                        <a href="tract-register.html" id="createAccountLink" class="font-bold text-[#bc6c25] hover:underline ml-1">Create an account →</a>
+                    </p>
+                    <p class="text-[10px] text-[#b8a68b] mt-3"><i class="fas fa-shield-alt mr-1"></i> Secure & earth-friendly</p>
+                </div>
+            </div>
+
+            <!-- small footer note -->
+            <div class="px-6 pb-6 pt-1 text-center">
+                <p class="text-[9px] text-[#bfae96]"><i class="fas fa-globe-americas mr-1"></i> 1% for the planet · free shipping over $50</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast notification (non-intrusive) -->
+    <div id="toastMsg" class="fixed bottom-6 left-1/2 -translate-x-1/2 bg-[#2c241a] text-white text-xs px-5 py-2.5 rounded-full shadow-xl z-50 transition-all duration-300 opacity-0 pointer-events-none whitespace-nowrap"></div>
+
+    <script>
+        (function() {
+            // DOM elements
+            const loginForm = document.getElementById('loginForm');
+            const loginIdentifier = document.getElementById('loginIdentifier');
+            const loginPassword = document.getElementById('loginPassword');
+            const loginIdError = document.getElementById('loginIdError');
+            const loginPassError = document.getElementById('loginPassError');
+            const togglePwBtn = document.getElementById('toggleLoginPw');
+            const guestBtn = document.getElementById('guestShopBtn');
+            const forgotLink = document.getElementById('forgotPwLink');
+            const createAccountLink = document.getElementById('createAccountLink');
+            const toast = document.getElementById('toastMsg');
+
+            // Toast helper
+            function showToast(message, isError = false) {
+                toast.innerText = message;
+                toast.classList.remove('opacity-0');
+                toast.classList.add('opacity-100');
+                if (isError) {
+                    toast.style.backgroundColor = '#9b2c1d';
+                    toast.style.color = '#fff5ea';
+                } else {
+                    toast.style.backgroundColor = '#2c241a';
+                    toast.style.color = '#ffebc2';
+                }
+                setTimeout(() => {
+                    toast.classList.remove('opacity-100');
+                    toast.classList.add('opacity-0');
+                }, 2300);
+                setTimeout(() => {
+                    if (!isError) toast.style.backgroundColor = '#2c241a';
+                }, 2500);
+            }
+
+            // reset error styles
+            function resetErrors() {
+                loginIdError?.classList.add('hidden');
+                loginPassError?.classList.add('hidden');
+                loginIdentifier?.classList.remove('border-red-400');
+                loginPassword?.classList.remove('border-red-400');
+            }
+
+            // Toggle password visibility
+            if (togglePwBtn) {
+                togglePwBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const type = loginPassword.getAttribute('type') === 'password' ? 'text' : 'password';
+                    loginPassword.setAttribute('type', type);
+                    const icon = togglePwBtn.querySelector('i');
+                    if (icon) {
+                        icon.classList.toggle('fa-eye-slash');
+                        icon.classList.toggle('fa-eye');
+                    }
+                });
+            }
+
+            // Login submit handler (full validation)
+            loginForm?.addEventListener('submit', (e) => {
+                e.preventDefault();
+                resetErrors();
+                let isValid = true;
+                const identifierValue = loginIdentifier?.value.trim() || '';
+                const passValue = loginPassword?.value.trim() || '';
+
+                if (identifierValue === '') {
+                    loginIdError?.classList.remove('hidden');
+                    loginIdentifier?.classList.add('border-red-400');
+                    isValid = false;
+                }
+                if (passValue === '') {
+                    loginPassError?.classList.remove('hidden');
+                    loginPassword?.classList.add('border-red-400');
+                    isValid = false;
+                }
+
+                if (isValid) {
+                    // Demo authentication: accept any non-empty credentials (since backend not required, mimics smooth flow)
+                    // In real world, you'd connect to API. For design mockup, we simulate login success.
+                    showToast(`✓ Welcome back! Redirecting to shop...`, false);
+                    setTimeout(() => {
+                        // Simulate redirect to main shop page (or close modal)
+                        alert(`🌿 Login successful!\nWelcome to tract — your sustainable journey starts now.`);
+                        // You can replace with actual redirect: window.location.href = "index.html";
+                        // For demo it shows success
+                    }, 400);
+                } else {
+                    showToast('❌ Please fill in both email/phone and password', true);
+                }
+            });
+
+            // Guest mode
+            guestBtn?.addEventListener('click', (e) => {
+                e.preventDefault();
+                showToast('✨ Continuing as guest — add items to cart!', false);
+                setTimeout(() => {
+                    alert('🌲 Guest mode active. You can now explore tract gear. (main page would open)');
+                    // optional redirect: window.location.href = "/";
+                }, 100);
+            });
+
+            // Forgot password demo
+            forgotLink?.addEventListener('click', (e) => {
+                e.preventDefault();
+                showToast('📧 Password reset link sent (demo) — check your inbox', false);
+            });
+
+            // "Create account" already points to tract-register.html (separate register page)
+            // Adding extra smooth preload hint
+            if (createAccountLink) {
+                createAccountLink.addEventListener('click', (e) => {
+                    // no prevent default - just allow navigation to separate register page
+                    console.log('Navigating to registration page (separate)');
+                });
+            }
+
+            // Remove red border on focus
+            const allInputs = [loginIdentifier, loginPassword];
+            allInputs.forEach(inp => {
+                if (inp) {
+                    inp.addEventListener('focus', () => {
+                        inp.classList.remove('border-red-400');
+                        if (inp.id === 'loginIdentifier') loginIdError?.classList.add('hidden');
+                        if (inp.id === 'loginPassword') loginPassError?.classList.add('hidden');
+                    });
+                }
+            });
+
+            // Small smooth interaction: prefill demo hint? not needed.
+            console.log('🔥 Tract Login Page (separate) | Works with tract-register.html');
+        })();
+    </script>
+</body>
+</html>

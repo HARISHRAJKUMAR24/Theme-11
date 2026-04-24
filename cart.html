@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Tract | Your Cart · Earth-Conscious Goods</title>
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Font Awesome 6 Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="./css/style.css">
+
+    <style>
+        * {
+            -webkit-tap-highlight-color: transparent;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #f4f2ef;
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+        }
+
+        ::-webkit-scrollbar {
+            width: 5px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #e7e2db;
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #bc6c25;
+            border-radius: 10px;
+        }
+
+        .cart-card {
+            border-radius: 1.5rem;
+            border: 1px solid #f0e2d4;
+            background: white;
+            transition: all 0.2s ease;
+        }
+
+        .quantity-btn {
+            transition: all 0.2s ease;
+        }
+
+        .quantity-btn:hover {
+            background: #bc6c25;
+            color: white;
+            border-color: #bc6c25;
+        }
+
+        .checkout-btn {
+            background: linear-gradient(95deg, #bc6c25, #e8a735);
+            transition: all 0.2s ease;
+        }
+
+        .checkout-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px -6px rgba(188, 108, 37, 0.5);
+        }
+
+        /* Burger Menu Styles */
+        .burger-menu {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            padding: 8px 4px;
+            cursor: pointer;
+            z-index: 20;
+            width: 32px;
+        }
+
+        .burger-line {
+            width: 24px;
+            height: 3px;
+            background: linear-gradient(90deg, #ffd966, #bc6c25);
+            border-radius: 4px;
+            transition: all 0.2s ease;
+        }
+
+        .burger-menu:not(.open) .line-1 {
+            animation: pulseLine1 1.2s ease-in-out infinite;
+        }
+
+        .burger-menu:not(.open) .line-2 {
+            animation: pulseLine2 1.2s ease-in-out infinite;
+        }
+
+        .burger-menu:not(.open) .line-3 {
+            animation: pulseLine3 1.2s ease-in-out infinite;
+        }
+
+        @keyframes pulseLine1 {
+
+            0%,
+            100% {
+                width: 18px;
+                opacity: 0.5;
+            }
+
+            50% {
+                width: 28px;
+                opacity: 1;
+                background: linear-gradient(90deg, #ffd966, #e8a735);
+            }
+        }
+
+        @keyframes pulseLine2 {
+
+            0%,
+            100% {
+                width: 28px;
+                opacity: 0.7;
+            }
+
+            50% {
+                width: 18px;
+                opacity: 1;
+                background: linear-gradient(90deg, #ffd966, #e8a735);
+            }
+        }
+
+        @keyframes pulseLine3 {
+
+            0%,
+            100% {
+                width: 22px;
+                opacity: 0.5;
+            }
+
+            50% {
+                width: 32px;
+                opacity: 1;
+                background: linear-gradient(90deg, #ffd966, #e8a735);
+            }
+        }
+
+        .burger-menu.open .line-1 {
+            animation: none;
+            transform: rotate(45deg) translate(5px, 6px);
+            width: 24px;
+        }
+
+        .burger-menu.open .line-2 {
+            animation: none;
+            opacity: 0;
+            width: 24px;
+        }
+
+        .burger-menu.open .line-3 {
+            animation: none;
+            transform: rotate(-45deg) translate(6px, -7px);
+            width: 24px;
+        }
+
+        .horizontal-nav {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            background: linear-gradient(135deg, #2c241a 0%, #3d2e1f 100%);
+        }
+
+        .horizontal-nav.open {
+            max-height: 300px;
+        }
+
+        .nav-links-horizontal {
+            display: flex;
+            flex-direction: row;
+            gap: 8px;
+            padding: 12px 16px;
+            overflow-x: auto;
+            scrollbar-width: thin;
+            white-space: nowrap;
+        }
+
+        .nav-link-horizontal {
+            padding: 10px 20px;
+            border-radius: 40px;
+            background: rgba(255, 255, 255, 0.08);
+            color: #f5efe6;
+            font-weight: 500;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            white-space: nowrap;
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(255, 217, 102, 0.2);
+        }
+
+        .nav-link-horizontal.shop-all {
+            background: linear-gradient(90deg, #bc6c25, #e8a735);
+            color: white;
+            border-color: #ffd966;
+        }
+
+        .profile-img {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid #ffd966;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        /* Toast Styles */
+        .toast-container {
+            position: fixed;
+            bottom: 24px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            pointer-events: none;
+        }
+
+        .toast-message {
+            backdrop-filter: blur(12px);
+            border-radius: 60px;
+            padding: 10px 24px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            box-shadow: 0 10px 30px -8px rgba(0, 0, 0, 0.25);
+            animation: toastFloatUp 0.4s cubic-bezier(0.34, 1.2, 0.64, 1) forwards;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            pointer-events: auto;
+        }
+
+        @keyframes toastFloatUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px) scale(0.9);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .toast-success {
+            background: linear-gradient(135deg, #2c5f2d 0%, #4a7c3f 100%);
+            color: white;
+            border-left: 4px solid #ffd966;
+        }
+    </style>
+</head>
+
+<body class="min-h-screen">
+
+    <div id="toastContainer" class="toast-container"></div>
+
+    <div class="flex justify-center items-start min-h-screen p-3 md:p-6">
+        <div class="w-full max-w-[480px] md:max-w-[540px] lg:max-w-[580px] bg-transparent rounded-3xl overflow-hidden">
+
+            <!-- Header -->
+            <div class="px-5 pt-5 pb-3 bg-gradient-to-r from-[#2c241a] to-[#4a3624] sticky top-0 z-10 rounded-t-3xl">
+                <div class="flex justify-between items-center gap-2 relative">
+                    <div class="burger-menu cursor-pointer flex-shrink-0" id="burgerMenuBtn">
+                        <div class="burger-line line-1"></div>
+                        <div class="burger-line line-2"></div>
+                        <div class="burger-line line-3"></div>
+                    </div>
+                    <div
+                        class="absolute left-1/2 transform -translate-x-1/2 flex items-center gap-2 pointer-events-none">
+                        <img src="https://picsum.photos/id/96/42/42" alt="Tract Logo"
+                            class="w-[42px] h-[42px] object-cover shadow-sm rounded-lg">
+                        <div>
+                            <h1 class="text-[1.65rem] font-bold tracking-tight text-white leading-tight">tract.</h1>
+                        </div>
+                    </div>
+                    <img id="profileBtn" src="https://randomuser.me/api/portraits/women/68.jpg" alt="Profile"
+                        class="profile-img">
+                </div>
+            </div>
+
+            <!-- ========== SECTION 2: HORIZONTAL NAV ========== -->
+            <div id="horizontalNav" class="horizontal-nav">
+                <div class="nav-links-horizontal">
+                    <a href="index.html" class="nav-link-horizontal shop-all" data-nav="shop-all">🏠 Home</a>
+                    <a href="login.html" class="nav-link-horizontal shop-all" data-nav="shop-all">🔐 Login</a>
+                    <a href="register.html" class="nav-link-horizontal shop-all" data-nav="register">📲 Register</a>
+                    <a href="profile.html" class="nav-link-horizontal shop-all" data-nav="profile">👤 Profile</a>
+                    <a href="cart.html" class="nav-link-horizontal shop-all" data-nav="cart">🛒 Cart</a>
+                    <a href="category.html" class="nav-link-horizontal shop-all" data-nav="category">🗂️
+                        Category</a>
+                    <a href="orders.html" class="nav-link-horizontal shop-all" data-nav="orders">📦 Orders</a>
+                    <a href="product.html" class="nav-link-horizontal shop-all" data-nav="product">🛍️ Product</a>
+                    <a href="track-order.html" class="nav-link-horizontal shop-all" data-nav="track-order">🚚
+                        TrackOrder</a>
+                    <a href="delivery-areas.html" class="nav-link-horizontal shop-all"
+                        data-nav="delivery-areas">🗺️Delivery Areas</a>
+                    <div class="nav-link-horizontal" data-nav="sustainable">🎁 Dummy Page</div>
+                    <div class="nav-link-horizontal" data-nav="gifts">🎁 Dummy Page</div>
+                </div>
+            </div>
+
+            <!-- Cart Content -->
+            <div class="bg-white rounded-b-3xl shadow-xl overflow-hidden mt-0">
+                <div class="p-5 md:p-6">
+                    <div class="flex items-center gap-3 mb-5">
+                        <i class="fas fa-shopping-cart text-[#bc6c25] text-2xl"></i>
+                        <h1 class="text-2xl font-bold text-[#2c241a]">Your Cart</h1>
+                        <span id="cartItemCount"
+                            class="bg-[#bc6c25] text-white text-xs rounded-full px-2 py-0.5">0</span>
+                    </div>
+
+                    <div class="flex flex-col lg:flex-row gap-6">
+                        <!-- Cart Items Section -->
+                        <div class="w-full lg:w-7/12">
+                            <div id="cartItemsList" class="space-y-3">
+                                <!-- Cart items will be injected here -->
+                                <div class="text-center py-10 text-[#8a7a66]">
+                                    <i class="fas fa-bag-shopping text-4xl mb-3 opacity-50"></i>
+                                    <p>Your cart is empty</p>
+                                    <a href="index.html"
+                                        class="inline-block mt-3 text-[#bc6c25] text-sm font-semibold">Continue Shopping
+                                        →</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Summary Section -->
+                        <div class="w-full lg:w-5/12">
+                            <div class="cart-card p-5 sticky top-24">
+                                <h3 class="font-bold text-lg text-[#2c241a] mb-4 pb-2 border-b border-[#f0e2d4]">
+                                    <i class="fas fa-receipt text-[#bc6c25] mr-2"></i>Order Summary
+                                </h3>
+
+                                <div class="space-y-3">
+                                    <div class="flex justify-between text-sm">
+                                        <span class="text-[#6b5a48]">Subtotal</span>
+                                        <span id="subtotalAmount" class="font-semibold text-[#2c241a]">₹0.00</span>
+                                    </div>
+                                    <div class="flex justify-between text-sm">
+                                        <span class="text-[#6b5a48]">Tax (GST 5%)</span>
+                                        <span id="taxAmount" class="font-semibold text-[#2c241a]">₹0.00</span>
+                                    </div>
+                                    <div class="flex justify-between text-sm">
+                                        <span class="text-[#6b5a48]">Discount</span>
+                                        <span id="discountAmount" class="font-semibold text-green-600">₹0.00</span>
+                                    </div>
+                                    <div class="border-t border-dashed border-[#e8e2db] my-2"></div>
+                                    <div class="flex justify-between text-base font-bold">
+                                        <span class="text-[#2c241a]">Total (INR)</span>
+                                        <span id="totalAmount" class="text-[#bc6c25] text-xl">₹0.00</span>
+                                    </div>
+                                </div>
+
+                                <button id="checkoutBtn"
+                                    class="checkout-btn w-full rounded-full py-3.5 text-white font-bold text-sm shadow-md flex items-center justify-center gap-2 transition-all mt-5">
+                                    <i class="fas fa-credit-card text-xs"></i> Proceed to Checkout
+                                </button>
+
+                                <p class="text-[9px] text-center text-[#a89882] mt-3">
+                                    <i class="fas fa-shield-alt text-[#bc6c25] mr-1"></i> Secure payment · Free shipping
+                                    on orders over ₹5000
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <footer class="bg-[#1a1612] text-white mt-2">
+                    <div class="px-5 py-4 text-center">
+                        <p class="text-[9px] text-[#7a6a56]">© 2026 tract — earth-conscious expedition goods</p>
+                    </div>
+                </footer>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ========== TOAST SYSTEM ==========
+        class TractToast {
+            constructor() {
+                this.container = document.getElementById('toastContainer');
+                if (!this.container) {
+                    const div = document.createElement('div');
+                    div.id = 'toastContainer';
+                    div.className = 'toast-container';
+                    document.body.appendChild(div);
+                    this.container = div;
+                }
+            }
+            show(message, type = 'success', duration = 2500) {
+                const toast = document.createElement('div');
+                toast.className = `toast-message toast-${type}`;
+                toast.innerHTML = `<i class="fas fa-check-circle"></i><span>${message}</span><div class="toast-progress"></div>`;
+                this.container.appendChild(toast);
+                setTimeout(() => {
+                    toast.classList.add('hide-toast');
+                    setTimeout(() => toast.remove(), 300);
+                }, duration);
+                return toast;
+            }
+            success(msg) { return this.show(msg, 'success'); }
+        }
+        const toast = new TractToast();
+
+        // ========== CART DATA (demo products) ==========
+        let cartItems = [
+            { id: "1", name: "Field Knife", price: 3899.99, quantity: 1, image: "https://picsum.photos/id/20/100/100", variant: null },
+            { id: "canvas_rucksack_M_Black", name: "Canvas Rucksack", price: 6599.00, quantity: 1, image: "https://picsum.photos/id/30/100/100", variant: { size: "M", color: "Black" } },
+            { id: "merino_sweater_L_Olive", name: "Merino Wool Sweater", price: 6699.99, quantity: 2, image: "https://picsum.photos/id/35/100/100", variant: { size: "L", color: "Olive Green" } }
+        ];
+
+        let appliedDiscount = 0;
+        let discountPercent = 0;
+
+        // Currency formatter
+        function formatPrice(price) {
+            return '₹' + price.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+        }
+
+        // Calculate totals
+        function calculateTotals() {
+            const subtotal = cartItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            const tax = subtotal * 0.05; // 5% GST
+            let discount = 0;
+            if (discountPercent > 0) {
+                discount = subtotal * (discountPercent / 100);
+            }
+            const total = subtotal + tax - discount;
+            return { subtotal, tax, discount, total };
+        }
+
+        // Update summary UI
+        function updateSummary() {
+            const { subtotal, tax, discount, total } = calculateTotals();
+            document.getElementById('subtotalAmount').innerText = formatPrice(subtotal);
+            document.getElementById('taxAmount').innerText = formatPrice(tax);
+            document.getElementById('discountAmount').innerText = formatPrice(discount);
+            document.getElementById('totalAmount').innerText = formatPrice(total);
+            const totalItems = cartItems.reduce((sum, item) => sum + item.quantity, 0);
+            document.getElementById('cartItemCount').innerText = totalItems;
+        }
+
+        // Render cart items
+        function renderCartItems() {
+            const container = document.getElementById('cartItemsList');
+            if (!cartItems.length) {
+                container.innerHTML = `<div class="text-center py-10 text-[#8a7a66]">
+                    <i class="fas fa-bag-shopping text-4xl mb-3 opacity-50"></i>
+                    <p>Your cart is empty</p>
+                    <a href="index.html" class="inline-block mt-3 text-[#bc6c25] text-sm font-semibold">Continue Shopping →</a>
+                </div>`;
+                updateSummary();
+                return;
+            }
+
+            container.innerHTML = cartItems.map((item, index) => `
+                <div class="cart-card p-3 flex gap-3 transition-all" data-index="${index}">
+                    <img src="${item.image}" alt="${item.name}" class="w-20 h-20 rounded-xl object-cover border border-[#f0e2d4]">
+                    <div class="flex-1">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <h4 class="font-bold text-sm text-[#2c241a]">${escapeHtml(item.name)}</h4>
+                                ${item.variant ? `<p class="text-[10px] text-[#8a7a66] mt-0.5">${item.variant.size} / ${item.variant.color}</p>` : ''}
+                            </div>
+                            <button class="remove-item text-[#a08c72] hover:text-red-500 transition" data-id="${item.id}">
+                                <i class="fas fa-trash-alt text-xs"></i>
+                            </button>
+                        </div>
+                        <div class="flex justify-between items-center mt-2">
+                            <span class="font-bold text-[#bc6c25] text-sm">${formatPrice(item.price)}</span>
+                            <div class="flex items-center gap-2">
+                                <button class="qty-decr w-7 h-7 rounded-full border border-[#e8e2db] bg-white text-[#5e4b38] quantity-btn flex items-center justify-center" data-id="${item.id}">−</button>
+                                <span class="text-sm font-semibold w-6 text-center">${item.quantity}</span>
+                                <button class="qty-incr w-7 h-7 rounded-full border border-[#e8e2db] bg-white text-[#5e4b38] quantity-btn flex items-center justify-center" data-id="${item.id}">+</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+
+            // Attach event listeners
+            document.querySelectorAll('.remove-item').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const id = btn.getAttribute('data-id');
+                    cartItems = cartItems.filter(item => item.id !== id);
+                    renderCartItems();
+                    updateSummary();
+                    toast.success('Item removed from cart');
+                    saveCartToLocal();
+                });
+            });
+
+            document.querySelectorAll('.qty-incr').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const id = btn.getAttribute('data-id');
+                    const item = cartItems.find(i => i.id === id);
+                    if (item) {
+                        item.quantity++;
+                        renderCartItems();
+                        updateSummary();
+                        saveCartToLocal();
+                    }
+                });
+            });
+
+            document.querySelectorAll('.qty-decr').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const id = btn.getAttribute('data-id');
+                    const item = cartItems.find(i => i.id === id);
+                    if (item && item.quantity > 1) {
+                        item.quantity--;
+                        renderCartItems();
+                        updateSummary();
+                        saveCartToLocal();
+                    } else if (item && item.quantity === 1) {
+                        cartItems = cartItems.filter(i => i.id !== id);
+                        renderCartItems();
+                        updateSummary();
+                        toast.success('Item removed');
+                        saveCartToLocal();
+                    }
+                });
+            });
+        }
+
+        function escapeHtml(str) {
+            if (!str) return '';
+            return str.replace(/[&<>]/g, function (m) {
+                if (m === '&') return '&amp;';
+                if (m === '<') return '&lt;';
+                if (m === '>') return '&gt;';
+                return m;
+            });
+        }
+
+        // Save to localStorage
+        function saveCartToLocal() {
+            localStorage.setItem('tract_cart', JSON.stringify(cartItems));
+        }
+
+        // Load cart from localStorage
+        function loadCartFromLocal() {
+            const saved = localStorage.getItem('tract_cart');
+            if (saved) {
+                try {
+                    const parsed = JSON.parse(saved);
+                    if (Array.isArray(parsed) && parsed.length) {
+                        cartItems = parsed;
+                    }
+                } catch (e) { }
+            }
+            renderCartItems();
+            updateSummary();
+        }
+
+        // ========== BURGER MENU ==========
+        function initBurgerMenu() {
+            const burger = document.getElementById('burgerMenuBtn');
+            const nav = document.getElementById('horizontalNav');
+            let navOpen = false;
+            function toggleNav() {
+                if (navOpen) {
+                    nav.classList.remove('open');
+                    burger.classList.remove('open');
+                } else {
+                    nav.classList.add('open');
+                    burger.classList.add('open');
+                }
+                navOpen = !navOpen;
+            }
+            burger?.addEventListener('click', (e) => { e.stopPropagation(); toggleNav(); });
+            document.addEventListener('click', (e) => {
+                if (navOpen && !burger.contains(e.target) && !nav.contains(e.target)) {
+                    nav.classList.remove('open');
+                    burger.classList.remove('open');
+                    navOpen = false;
+                }
+            });
+        }
+
+        // ========== INIT ==========
+        document.addEventListener('DOMContentLoaded', () => {
+            initBurgerMenu();
+            loadCartFromLocal();
+
+
+
+
+            // Checkout button
+            document.getElementById('checkoutBtn')?.addEventListener('click', () => {
+                if (cartItems.length === 0) {
+                    toast.success('Your cart is empty! Add some items');
+                    return;
+                }
+                const { subtotal, tax, discount, total } = calculateTotals();
+                alert(`🛍️ Order Summary\n\nSubtotal: ${formatPrice(subtotal)}\nTax: ${formatPrice(tax)}\nDiscount: ${formatPrice(discount)}\nTotal: ${formatPrice(total)}\n\nThank you for shopping at Tract! 🌱`);
+            });
+
+            // Profile button
+            document.getElementById('profileBtn')?.addEventListener('click', () => {
+                window.location.href = 'profile.html';
+            });
+        });
+    </script>
+    <script src="./js/script.js"></script>
+</body>
+
+</html>

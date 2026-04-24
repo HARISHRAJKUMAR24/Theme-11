@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Tract | Register · Join Earth-Conscious Community</title>
+    <!-- Tailwind CSS + Font Awesome (exactly matching main style) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="./css/style.css">
+    <style>
+        /* Custom scroll + earthy tones (same as main Tract site & login page) */
+        * {
+            -webkit-tap-highlight-color: transparent;
+        }
+        body {
+            background: #f4f2ef;
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+        }
+        ::-webkit-scrollbar {
+            width: 5px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #e7e2db;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #bc6c25;
+            border-radius: 10px;
+        }
+        .input-focus:focus {
+            border-color: #bc6c25;
+            box-shadow: 0 0 0 3px rgba(188,108,37,0.15);
+            outline: none;
+        }
+        .btn-register {
+            background: linear-gradient(95deg, #bc6c25, #e8a735);
+            transition: all 0.2s ease;
+        }
+        .btn-register:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px -8px rgba(188,108,37,0.5);
+        }
+        .guest-btn {
+            transition: all 0.2s ease;
+        }
+        .guest-btn:hover {
+            background: #fef4ea;
+            border-color: #bc6c25;
+        }
+        .auth-card {
+            border-radius: 2rem;
+            border: 1px solid #f0e2d4;
+            box-shadow: 0 25px 40px -12px rgba(0, 0, 0, 0.2);
+        }
+        .strength-bar {
+            height: 3px;
+            transition: all 0.2s ease;
+        }
+    </style>
+</head>
+<body class="flex items-center justify-center min-h-screen p-4 md:p-6">
+
+    <div class="w-full max-w-[480px] mx-auto">
+        <!-- REGISTRATION CARD (SEPARATE PAGE) -->
+        <div class="bg-white rounded-3xl auth-card overflow-hidden shadow-2xl">
+            
+            <!-- ========== SECTION 1: HEADER ========== -->
+            <div class="px-5 pt-5 pb-3 bg-gradient-to-r from-[#2c241a] to-[#4a3624] sticky top-0 z-10">
+                <div class="flex justify-between items-center gap-2 relative">
+                    <div class="burger-menu cursor-pointer flex-shrink-0" id="burgerMenuBtn">
+                        <div class="burger-line line-1"></div>
+                        <div class="burger-line line-2"></div>
+                        <div class="burger-line line-3"></div>
+                    </div>
+                    <div
+                        class="absolute left-1/2 transform -translate-x-1/2 flex items-center gap-2 pointer-events-none">
+                        <img src="https://picsum.photos/id/96/42/42" alt="Tract Logo"
+                            class="w-[42px] h-[42px] object-cover shadow-sm rounded-lg">
+                        <div>
+                            <h1 class="text-[1.65rem] font-bold tracking-tight text-white leading-tight">tract.</h1>
+                        </div>
+                    </div>
+                    <img id="profileBtn" src="https://randomuser.me/api/portraits/women/68.jpg" alt="Profile"
+                        class="profile-img">
+                </div>
+            </div>
+
+            <!-- ========== SECTION 2: HORIZONTAL NAV ========== -->
+            <div id="horizontalNav" class="horizontal-nav">
+                <div class="nav-links-horizontal">
+                    <a href="index.html" class="nav-link-horizontal shop-all" data-nav="shop-all">🏠 Home</a>
+                    <a href="login.html" class="nav-link-horizontal shop-all" data-nav="shop-all">🔐 Login</a>
+                    <a href="register.html" class="nav-link-horizontal shop-all" data-nav="register">📲 Register</a>
+                    <a href="profile.html" class="nav-link-horizontal shop-all" data-nav="profile">👤 Profile</a>
+                    <a href="cart.html" class="nav-link-horizontal shop-all" data-nav="cart">🛒 Cart</a>
+                    <a href="category.html" class="nav-link-horizontal shop-all" data-nav="category">🗂️
+                        Category</a>
+                    <a href="orders.html" class="nav-link-horizontal shop-all" data-nav="orders">📦 Orders</a>
+                    <a href="product.html" class="nav-link-horizontal shop-all" data-nav="product">🛍️ Product</a>
+                    <a href="track-order.html" class="nav-link-horizontal shop-all" data-nav="track-order">🚚
+                        TrackOrder</a>
+                    <a href="delivery-areas.html" class="nav-link-horizontal shop-all"
+                        data-nav="delivery-areas">🗺️Delivery Areas</a>
+                    <div class="nav-link-horizontal" data-nav="sustainable">🎁 Dummy Page</div>
+                    <div class="nav-link-horizontal" data-nav="gifts">🎁 Dummy Page</div>
+                </div>
+            </div>
+
+            <!-- REGISTRATION FORM SECTION -->
+            <div class="p-6 md:p-7">
+                <div class="text-center mb-6">
+                    <h2 class="text-2xl font-bold text-[#2c241a]">Create account</h2>
+                    <p class="text-sm text-[#8a7a66] mt-1">Join the tract community 🌿</p>
+                </div>
+
+                <form id="registerForm" class="space-y-4">
+                    <!-- 1. Full Name (required) -->
+                    <div>
+                        <label class="block text-xs font-semibold text-[#4b3621] mb-1.5 tracking-wide">
+                            <i class="far fa-user mr-1 text-[#bc6c25]"></i> Full Name <span class="text-red-500">*</span>
+                        </label>
+                        <input type="text" id="regName" placeholder="Alex Morgan" 
+                            class="w-full border border-[#e8e2db] rounded-2xl py-3.5 px-4 text-sm bg-[#fefcf9] transition-all input-focus">
+                        <p class="text-[10px] text-red-500 mt-1 hidden" id="regNameError">Please enter your full name</p>
+                    </div>
+
+                    <!-- 2. Phone Number (required) -->
+                    <div>
+                        <label class="block text-xs font-semibold text-[#4b3621] mb-1.5 tracking-wide">
+                            <i class="fas fa-phone-alt mr-1 text-[#bc6c25]"></i> Phone Number <span class="text-red-500">*</span>
+                        </label>
+                        <input type="tel" id="regPhone" placeholder="+1 987 654 3210" 
+                            class="w-full border border-[#e8e2db] rounded-2xl py-3.5 px-4 text-sm bg-[#fefcf9] transition-all input-focus">
+                        <p class="text-[10px] text-red-500 mt-1 hidden" id="regPhoneError">Phone number required</p>
+                    </div>
+
+                    <!-- 3. Email Address (optional) with note -->
+                    <div>
+                        <label class="block text-xs font-semibold text-[#4b3621] mb-1.5 tracking-wide">
+                            <i class="far fa-envelope mr-1 text-[#bc6c25]"></i> Email Address <span class="text-[#a3927c] font-normal">(optional)</span>
+                        </label>
+                        <input type="email" id="regEmail" placeholder="hello@example.com" 
+                            class="w-full border border-[#e8e2db] rounded-2xl py-3.5 px-4 text-sm bg-[#fefcf9] transition-all input-focus">
+                        <p class="text-[10px] text-[#b48c5c] ml-1 mt-0.5">We'll send order updates & eco-tips</p>
+                    </div>
+
+                    <!-- 4. Password (required) + strength indicator -->
+                    <div>
+                        <label class="block text-xs font-semibold text-[#4b3621] mb-1.5 tracking-wide">
+                            <i class="fas fa-lock mr-1 text-[#bc6c25]"></i> Password <span class="text-red-500">*</span>
+                        </label>
+                        <div class="relative">
+                            <input type="password" id="regPassword" placeholder="Create a strong password" 
+                                class="w-full border border-[#e8e2db] rounded-2xl py-3.5 px-4 text-sm bg-[#fefcf9] transition-all input-focus pr-11">
+                            <button type="button" id="toggleRegPw" class="absolute right-3 top-1/2 -translate-y-1/2 text-[#a08c72] hover:text-[#bc6c25] transition">
+                                <i class="far fa-eye-slash text-sm"></i>
+                            </button>
+                        </div>
+                        <!-- password strength meter (visual feedback) -->
+                        <div class="mt-2 flex gap-1">
+                            <div class="strength-bar flex-1 rounded-full bg-gray-200"></div>
+                            <div class="strength-bar flex-1 rounded-full bg-gray-200"></div>
+                            <div class="strength-bar flex-1 rounded-full bg-gray-200"></div>
+                        </div>
+                        <p class="text-[10px] text-red-500 mt-1 hidden" id="regPassError">Password must be at least 6 characters</p>
+                        <p class="text-[10px] text-[#8a7a66] mt-1" id="strengthHint">Use 6+ characters for stronger security</p>
+                    </div>
+
+                    <!-- Submit button -->
+                    <button type="submit" class="btn-register w-full rounded-full py-3.5 text-white font-bold text-sm shadow-md flex items-center justify-center gap-2 transition-all mt-2">
+                        <i class="fas fa-user-plus text-xs"></i> Register & Start Shopping
+                    </button>
+                </form>
+
+                <!-- Divider -->
+                <div class="flex items-center my-6">
+                    <div class="flex-1 h-px bg-[#e8e2db]"></div>
+                    <span class="px-3 text-[10px] text-[#a28f76] font-medium">already part of tract?</span>
+                    <div class="flex-1 h-px bg-[#e8e2db]"></div>
+                </div>
+
+                <!-- Guest button + login redirect -->
+                <button id="guestShopBtn" class="guest-btn w-full rounded-full py-3.5 border border-[#bc6c25]/40 text-[#bc6c25] font-semibold text-sm bg-white hover:bg-[#fef4ea] transition flex items-center justify-center gap-2 mb-4">
+                    <i class="fas fa-store"></i> Continue as Guest
+                </button>
+
+                <!-- Login callout (navigate to separate login page) -->
+                <div class="text-center">
+                    <p class="text-sm text-[#6b5a48]">Already have an account? 
+                        <a href="tract-login.html" id="loginRedirectLink" class="font-bold text-[#bc6c25] hover:underline ml-1">Log in →</a>
+                    </p>
+                    <p class="text-[10px] text-[#b8a68b] mt-3"><i class="fas fa-leaf mr-1"></i> By registering you agree to sustainable practices</p>
+                </div>
+            </div>
+
+            <!-- small footer note -->
+            <div class="px-6 pb-6 pt-1 text-center">
+                <p class="text-[9px] text-[#bfae96]"><i class="fas fa-globe-americas mr-1"></i> 1% for the planet · free shipping over $50</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast notification (non-intrusive) -->
+    <div id="toastMsg" class="fixed bottom-6 left-1/2 -translate-x-1/2 bg-[#2c241a] text-white text-xs px-5 py-2.5 rounded-full shadow-xl z-50 transition-all duration-300 opacity-0 pointer-events-none whitespace-nowrap"></div>
+
+    <script>
+        (function() {
+            // DOM elements
+            const registerForm = document.getElementById('registerForm');
+            const regName = document.getElementById('regName');
+            const regPhone = document.getElementById('regPhone');
+            const regEmail = document.getElementById('regEmail');
+            const regPassword = document.getElementById('regPassword');
+            const regNameError = document.getElementById('regNameError');
+            const regPhoneError = document.getElementById('regPhoneError');
+            const regPassError = document.getElementById('regPassError');
+            const togglePwBtn = document.getElementById('toggleRegPw');
+            const guestBtn = document.getElementById('guestShopBtn');
+            const loginRedirect = document.getElementById('loginRedirectLink');
+            const toast = document.getElementById('toastMsg');
+            
+            // Strength elements
+            const strengthBars = document.querySelectorAll('.strength-bar');
+            const strengthHint = document.getElementById('strengthHint');
+
+            // Toast helper
+            function showToast(message, isError = false) {
+                toast.innerText = message;
+                toast.classList.remove('opacity-0');
+                toast.classList.add('opacity-100');
+                if (isError) {
+                    toast.style.backgroundColor = '#9b2c1d';
+                    toast.style.color = '#fff5ea';
+                } else {
+                    toast.style.backgroundColor = '#2c241a';
+                    toast.style.color = '#ffebc2';
+                }
+                setTimeout(() => {
+                    toast.classList.remove('opacity-100');
+                    toast.classList.add('opacity-0');
+                }, 2400);
+                setTimeout(() => {
+                    if (!isError) toast.style.backgroundColor = '#2c241a';
+                }, 2600);
+            }
+
+            // reset error styles
+            function resetErrors() {
+                regNameError?.classList.add('hidden');
+                regPhoneError?.classList.add('hidden');
+                regPassError?.classList.add('hidden');
+                regName?.classList.remove('border-red-400');
+                regPhone?.classList.remove('border-red-400');
+                regPassword?.classList.remove('border-red-400');
+            }
+
+            // Password strength meter (real-time)
+            function updatePasswordStrength() {
+                const pass = regPassword?.value || '';
+                let strength = 0;
+                if (pass.length >= 6) strength = 1;
+                if (pass.length >= 8) strength = 2;
+                if (pass.length >= 10 && /[a-z]/.test(pass) && /[0-9]/.test(pass)) strength = 3;
+                
+                // reset bars
+                strengthBars.forEach((bar, idx) => {
+                    bar.classList.remove('bg-red-400', 'bg-yellow-500', 'bg-green-600', 'bg-gray-200');
+                    if (idx < strength) {
+                        if (strength === 1) bar.classList.add('bg-red-400');
+                        else if (strength === 2) bar.classList.add('bg-yellow-500');
+                        else if (strength === 3) bar.classList.add('bg-green-600');
+                    } else {
+                        bar.classList.add('bg-gray-200');
+                    }
+                });
+                
+                if (pass.length === 0) {
+                    strengthHint.innerText = 'Use 6+ characters for stronger security';
+                    strengthHint.classList.remove('text-green-700');
+                    strengthHint.classList.add('text-[#8a7a66]');
+                } else if (pass.length >= 1 && pass.length < 6) {
+                    strengthHint.innerText = '⚠️ Too short — minimum 6 characters';
+                    strengthHint.classList.add('text-red-500');
+                    strengthHint.classList.remove('text-[#8a7a66]', 'text-green-700');
+                } else if (pass.length >= 6 && pass.length < 8) {
+                    strengthHint.innerText = '🔒 Weak — add more characters & numbers';
+                    strengthHint.classList.add('text-red-500');
+                } else if (pass.length >= 8 && pass.length < 10) {
+                    strengthHint.innerText = '👍 Moderate — good start';
+                    strengthHint.classList.remove('text-red-500');
+                    strengthHint.classList.add('text-yellow-700');
+                } else if (pass.length >= 10) {
+                    strengthHint.innerText = '💪 Strong password!';
+                    strengthHint.classList.remove('text-red-500', 'text-yellow-700');
+                    strengthHint.classList.add('text-green-700');
+                }
+            }
+            
+            if (regPassword) {
+                regPassword.addEventListener('input', updatePasswordStrength);
+            }
+
+            // Toggle password visibility
+            if (togglePwBtn) {
+                togglePwBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const type = regPassword.getAttribute('type') === 'password' ? 'text' : 'password';
+                    regPassword.setAttribute('type', type);
+                    const icon = togglePwBtn.querySelector('i');
+                    if (icon) {
+                        icon.classList.toggle('fa-eye-slash');
+                        icon.classList.toggle('fa-eye');
+                    }
+                });
+            }
+
+            // Registration submit handler (validation for: Name, Phone, Password (min 6 chars), Email optional)
+            registerForm?.addEventListener('submit', (e) => {
+                e.preventDefault();
+                resetErrors();
+                let isValid = true;
+                
+                const nameValue = regName?.value.trim() || '';
+                const phoneValue = regPhone?.value.trim() || '';
+                const passValue = regPassword?.value.trim() || '';
+                const emailValue = regEmail?.value.trim() || '';
+
+                // Validate Full Name
+                if (nameValue === '') {
+                    regNameError?.classList.remove('hidden');
+                    regName?.classList.add('border-red-400');
+                    isValid = false;
+                } else if (nameValue.length < 2) {
+                    regNameError.innerText = 'Please enter full name (at least 2 characters)';
+                    regNameError?.classList.remove('hidden');
+                    regName?.classList.add('border-red-400');
+                    isValid = false;
+                } else {
+                    regName?.classList.remove('border-red-400');
+                }
+
+                // Validate Phone Number (required, basic length)
+                if (phoneValue === '') {
+                    regPhoneError.innerText = 'Phone number required';
+                    regPhoneError?.classList.remove('hidden');
+                    regPhone?.classList.add('border-red-400');
+                    isValid = false;
+                } else if (phoneValue.length < 5) {
+                    regPhoneError.innerText = 'Enter a valid phone number (min 5 digits)';
+                    regPhoneError?.classList.remove('hidden');
+                    regPhone?.classList.add('border-red-400');
+                    isValid = false;
+                } else {
+                    regPhone?.classList.remove('border-red-400');
+                }
+
+                // Password validation (min 6 chars)
+                if (passValue === '') {
+                    regPassError.innerText = 'Password is required';
+                    regPassError?.classList.remove('hidden');
+                    regPassword?.classList.add('border-red-400');
+                    isValid = false;
+                } else if (passValue.length < 6) {
+                    regPassError.innerText = 'Password must be at least 6 characters';
+                    regPassError?.classList.remove('hidden');
+                    regPassword?.classList.add('border-red-400');
+                    isValid = false;
+                } else {
+                    regPassword?.classList.remove('border-red-400');
+                }
+
+                if (isValid) {
+                    // Simulate successful registration (demo)
+                    const optionalEmail = emailValue !== '' ? emailValue : '(not provided)';
+                    showToast(`🌱 Welcome ${nameValue}! Account created.`, false);
+                    setTimeout(() => {
+                        // Successful registration alert + offer to login
+                        const userConfirmed = confirm(`✨ Registration successful ✨\n\nName: ${nameValue}\nPhone: ${phoneValue}\nEmail: ${optionalEmail}\n\n🔄 Would you like to log in now?`);
+                        if (userConfirmed) {
+                            // Redirect to separate login page (tract-login.html)
+                            window.location.href = 'tract-login.html';
+                        } else {
+                            // Guest / browse hint
+                            alert('🌲 You can continue exploring Tract as a guest or log in later.');
+                            // optional redirect to main store
+                        }
+                    }, 400);
+                } else {
+                    showToast('❌ Please fill all required fields correctly', true);
+                }
+            });
+
+            // Guest mode button (navigate or simulate)
+            guestBtn?.addEventListener('click', (e) => {
+                e.preventDefault();
+                showToast('✨ Continuing as guest — explore sustainable goods', false);
+                setTimeout(() => {
+                    alert('🌿 Guest mode active. You can shop without an account.');
+                    // Optional: redirect to main shop page if needed: window.location.href = "index.html";
+                }, 100);
+            });
+
+            // Login redirect link (points to separate login page)
+            if (loginRedirect) {
+                loginRedirect.addEventListener('click', (e) => {
+                    // default navigation to tract-login.html (separate page)
+                    console.log('Navigating to login page (separate)');
+                });
+            }
+
+            // Remove red border on focus / live error reset
+            const allInputs = [regName, regPhone, regEmail, regPassword];
+            allInputs.forEach(inp => {
+                if (inp) {
+                    inp.addEventListener('focus', () => {
+                        inp.classList.remove('border-red-400');
+                        if (inp.id === 'regName') regNameError?.classList.add('hidden');
+                        if (inp.id === 'regPhone') regPhoneError?.classList.add('hidden');
+                        if (inp.id === 'regPassword') regPassError?.classList.add('hidden');
+                    });
+                }
+            });
+            
+            // Optional: phone number formatting hint (just UX)
+            if (regPhone) {
+                regPhone.addEventListener('input', (e) => {
+                    let val = e.target.value.replace(/\D/g, '');
+                    if (val.length > 10) val = val.slice(0, 10);
+                    // subtle visual feedback but keep raw, no forced format for simplicity
+                });
+            }
+
+            console.log('🌿 Tract Registration Page (separate) | Name, Phone, Email(optional), Password + strength meter');
+        })();
+    </script>
+    <script src="./js/script.js"></script>
+</body>
+</html>

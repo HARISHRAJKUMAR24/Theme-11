@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Tract | My Orders · Earth-Conscious Account</title>
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Font Awesome 6 Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="./css/style.css">
+    <style>
+        * {
+            -webkit-tap-highlight-color: transparent;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #f4f2ef;
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+        }
+
+        ::-webkit-scrollbar {
+            width: 5px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #e7e2db;
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #bc6c25;
+            border-radius: 10px;
+        }
+
+        /* Burger Menu */
+        .burger-menu {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            padding: 8px 4px;
+            cursor: pointer;
+            z-index: 20;
+            width: 32px;
+        }
+
+        .burger-line {
+            width: 24px;
+            height: 3px;
+            background: linear-gradient(90deg, #ffd966, #bc6c25);
+            border-radius: 4px;
+            transition: all 0.2s ease;
+        }
+
+        .burger-menu:not(.open) .line-1 {
+            animation: pulseLine1 1.2s ease-in-out infinite;
+        }
+
+        .burger-menu:not(.open) .line-2 {
+            animation: pulseLine2 1.2s ease-in-out infinite;
+        }
+
+        .burger-menu:not(.open) .line-3 {
+            animation: pulseLine3 1.2s ease-in-out infinite;
+        }
+
+        @keyframes pulseLine1 {
+
+            0%,
+            100% {
+                width: 18px;
+                opacity: 0.5;
+            }
+
+            50% {
+                width: 28px;
+                opacity: 1;
+                background: linear-gradient(90deg, #ffd966, #e8a735);
+            }
+        }
+
+        @keyframes pulseLine2 {
+
+            0%,
+            100% {
+                width: 28px;
+                opacity: 0.7;
+            }
+
+            50% {
+                width: 18px;
+                opacity: 1;
+                background: linear-gradient(90deg, #ffd966, #e8a735);
+            }
+        }
+
+        @keyframes pulseLine3 {
+
+            0%,
+            100% {
+                width: 22px;
+                opacity: 0.5;
+            }
+
+            50% {
+                width: 32px;
+                opacity: 1;
+                background: linear-gradient(90deg, #ffd966, #e8a735);
+            }
+        }
+
+        .burger-menu.open .line-1 {
+            animation: none;
+            transform: rotate(45deg) translate(5px, 6px);
+            width: 24px;
+        }
+
+        .burger-menu.open .line-2 {
+            animation: none;
+            opacity: 0;
+            width: 24px;
+        }
+
+        .burger-menu.open .line-3 {
+            animation: none;
+            transform: rotate(-45deg) translate(6px, -7px);
+            width: 24px;
+        }
+
+        .horizontal-nav {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            background: linear-gradient(135deg, #2c241a 0%, #3d2e1f 100%);
+        }
+
+        .horizontal-nav.open {
+            max-height: 300px;
+        }
+
+        .nav-links-horizontal {
+            display: flex;
+            flex-direction: row;
+            gap: 8px;
+            padding: 12px 16px;
+            overflow-x: auto;
+            scrollbar-width: thin;
+            white-space: nowrap;
+        }
+
+        .nav-link-horizontal {
+            padding: 10px 20px;
+            border-radius: 40px;
+            background: rgba(255, 255, 255, 0.08);
+            color: #f5efe6;
+            font-weight: 500;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            white-space: nowrap;
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(255, 217, 102, 0.2);
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .nav-link-horizontal.shop-all,
+        .nav-link-horizontal.active {
+            background: linear-gradient(90deg, #bc6c25, #e8a735);
+            color: white;
+            border-color: #ffd966;
+        }
+
+        .profile-img {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid #ffd966;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        /* Orders Table Styles */
+        .orders-container {
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .orders-table {
+            min-width: 500px;
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+        }
+
+        .orders-table th {
+            background: #fefaf6;
+            padding: 12px 8px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #5e4b38;
+            border-bottom: 2px solid #f0e2d4;
+            text-align: left;
+        }
+
+        .orders-table td {
+            padding: 14px 8px;
+            font-size: 0.75rem;
+            border-bottom: 1px solid #f0e2d4;
+            color: #2c241a;
+            vertical-align: middle;
+        }
+
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 4px 10px;
+            border-radius: 30px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        .status-delivered {
+            background: #2c5f2d20;
+            color: #2c5f2d;
+        }
+
+        .status-shipped {
+            background: #bc6c2520;
+            color: #bc6c25;
+        }
+
+        .status-processing {
+            background: #e8a73520;
+            color: #c97e0a;
+        }
+
+        .status-pending {
+            background: #8b3a2b20;
+            color: #8b3a2b;
+        }
+
+        .status-cancelled {
+            background: #8b3a2b15;
+            color: #8b3a2b;
+        }
+
+        .view-details-btn {
+            background: transparent;
+            border: 1px solid #bc6c25;
+            color: #bc6c25;
+            padding: 4px 10px;
+            border-radius: 30px;
+            font-size: 0.65rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .view-details-btn:hover {
+            background: #bc6c25;
+            color: white;
+        }
+
+        /* Toast */
+        .toast-container {
+            position: fixed;
+            bottom: 24px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            pointer-events: none;
+        }
+
+        .toast-message {
+            backdrop-filter: blur(12px);
+            border-radius: 60px;
+            padding: 10px 24px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            box-shadow: 0 10px 30px -8px rgba(0, 0, 0, 0.25);
+            animation: toastFloatUp 0.4s cubic-bezier(0.34, 1.2, 0.64, 1) forwards;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            pointer-events: auto;
+        }
+
+        @keyframes toastFloatUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px) scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .toast-success {
+            background: linear-gradient(135deg, #2c5f2d 0%, #4a7c3f 100%);
+            color: white;
+            border-left: 4px solid #ffd966;
+        }
+
+        /* Order Details Modal */
+        .order-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(8px);
+            z-index: 3000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            visibility: hidden;
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+
+        .order-modal.open {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        .order-modal-content {
+            background: white;
+            max-width: 400px;
+            width: 90%;
+            border-radius: 32px;
+            overflow: hidden;
+            animation: modalSlideIn 0.3s ease;
+        }
+
+        @keyframes modalSlideIn {
+            from {
+                transform: translateY(30px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="toastContainer" class="toast-container"></div>
+
+    <!-- Order Details Modal -->
+    <div id="orderModal" class="order-modal">
+        <div class="order-modal-content">
+            <div class="bg-gradient-to-r from-[#2c241a] to-[#4a3624] px-5 py-4">
+                <div class="flex justify-between items-center">
+                    <h3 class="text-white font-bold text-lg">Order Details</h3>
+                    <button id="closeModalBtn" class="w-8 h-8 rounded-full bg-white/10 text-white flex items-center justify-center hover:bg-white/20 transition">
+                        <i class="fas fa-times text-sm"></i>
+                    </button>
+                </div>
+            </div>
+            <div id="modalContent" class="p-5">
+                <!-- Dynamic content -->
+            </div>
+        </div>
+    </div>
+
+    <div class="flex justify-center items-start min-h-screen p-3 md:p-6">
+        <div class="w-full max-w-[480px] md:max-w-[540px] lg:max-w-[580px] bg-transparent rounded-3xl overflow-hidden">
+
+            <!-- Header -->
+            <div class="px-5 pt-5 pb-3 bg-gradient-to-r from-[#2c241a] to-[#4a3624] sticky top-0 z-10 rounded-t-3xl">
+                <div class="flex justify-between items-center gap-2 relative">
+                    <div class="burger-menu cursor-pointer flex-shrink-0" id="burgerMenuBtn">
+                        <div class="burger-line line-1"></div>
+                        <div class="burger-line line-2"></div>
+                        <div class="burger-line line-3"></div>
+                    </div>
+                    <div class="absolute left-1/2 transform -translate-x-1/2 flex items-center gap-2 pointer-events-none">
+                        <img src="https://picsum.photos/id/96/42/42" alt="Tract Logo" class="w-[42px] h-[42px] object-cover shadow-sm rounded-lg">
+                        <div>
+                            <h1 class="text-[1.65rem] font-bold tracking-tight text-white leading-tight">tract.</h1>
+                        </div>
+                    </div>
+                    <img id="profileBtn" src="https://randomuser.me/api/portraits/women/68.jpg" alt="Profile" class="profile-img">
+                </div>
+            </div>
+
+                <!-- ========== SECTION 2: HORIZONTAL NAV ========== -->
+                <div id="horizontalNav" class="horizontal-nav">
+                    <div class="nav-links-horizontal">
+                         <a href="index.html" class="nav-link-horizontal shop-all" data-nav="shop-all">🏠 Home</a>
+                        <a href="login.html" class="nav-link-horizontal shop-all" data-nav="shop-all">🔐 Login</a>
+                        <a href="register.html" class="nav-link-horizontal shop-all" data-nav="register">📲 Register</a>
+                        <a href="profile.html" class="nav-link-horizontal shop-all" data-nav="profile">👤 Profile</a>
+                        <a href="cart.html" class="nav-link-horizontal shop-all" data-nav="cart">🛒 Cart</a>
+                        <a href="category.html" class="nav-link-horizontal shop-all" data-nav="category">🗂️
+                            Category</a>
+                        <a href="orders.html" class="nav-link-horizontal shop-all" data-nav="orders">📦 Orders</a>
+                        <a href="product.html" class="nav-link-horizontal shop-all" data-nav="product">🛍️ Product</a>
+                        <a href="track-order.html" class="nav-link-horizontal shop-all" data-nav="track-order">🚚
+                            TrackOrder</a>
+                        <a href="delivery-areas.html" class="nav-link-horizontal shop-all"
+                            data-nav="delivery-areas">🗺️Delivery Areas</a>
+                        <div class="nav-link-horizontal" data-nav="sustainable">🎁 Dummy Page</div>
+                        <div class="nav-link-horizontal" data-nav="gifts">🎁  Dummy Page</div>
+                    </div>
+                </div>
+
+            <!-- Orders Content -->
+            <div class="bg-white rounded-b-3xl shadow-xl overflow-hidden mt-0">
+                <div class="p-5 md:p-6">
+
+                    <!-- Page Title -->
+                    <div class="text-center mb-6">
+                        <div class="inline-flex items-center gap-2 px-4 py-1.5 bg-gradient-to-r from-[#bc6c25]/10 to-[#e8a735]/10 rounded-full text-xs font-semibold mb-3">
+                            <i class="fas fa-box-open text-[#bc6c25]"></i>
+                            <span class="text-[#bc6c25]">ORDER HISTORY</span>
+                        </div>
+                        <h1 class="text-2xl font-bold text-[#2c241a]">My Orders</h1>
+                        <p class="text-xs text-[#8a7a66] mt-1">Track and manage your purchases</p>
+                    </div>
+
+                    <!-- Orders Table -->
+                    <div class="orders-container">
+                        <table class="orders-table">
+                            <thead>
+                                <tr>
+                                    <th>Order ID</th>
+                                    <th>Created</th>
+                                    <th>Total</th>
+                                    <th>Payment</th>
+                                    <th>Status</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody id="ordersTableBody">
+                                <!-- Orders will be injected here -->
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- No Orders Message -->
+                    <div id="noOrdersMsg" class="text-center py-10 hidden">
+                        <i class="fas fa-box-open text-4xl text-[#d4c5b5] mb-3"></i>
+                        <p class="text-[#8a7a66]">No orders yet</p>
+                        <a href="category.html" class="mt-3 inline-block text-[#bc6c25] text-sm font-semibold">Start Shopping →</a>
+                    </div>
+
+                </div>
+
+                <!-- Footer -->
+                <footer class="bg-[#1a1612] text-white mt-2">
+                    <div class="px-5 py-4 text-center">
+                        <p class="text-[9px] text-[#7a6a56]">© 2026 tract — earth-conscious expedition goods</p>
+                    </div>
+                </footer>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ========== TOAST ==========
+        class TractToast {
+            constructor() {
+                this.container = document.getElementById('toastContainer');
+                if (!this.container) {
+                    const div = document.createElement('div');
+                    div.id = 'toastContainer';
+                    div.className = 'toast-container';
+                    document.body.appendChild(div);
+                    this.container = div;
+                }
+            }
+            show(message) {
+                const toast = document.createElement('div');
+                toast.className = 'toast-message toast-success';
+                toast.innerHTML = `<i class="fas fa-check-circle"></i><span>${message}</span>`;
+                this.container.appendChild(toast);
+                setTimeout(() => {
+                    toast.style.opacity = '0';
+                    toast.style.transform = 'translateY(10px)';
+                    setTimeout(() => toast.remove(), 300);
+                }, 2500);
+            }
+        }
+        const toast = new TractToast();
+
+        // ========== DUMMY ORDERS DATA ==========
+        const orders = [
+            { id: "#6685-1033558", created: "19/03/2026", total: 10.00, payment: "UPI", status: "Shipped", items: ["Field Knife x1", "Compass x1"] },
+            { id: "#6685-1033559", created: "15/03/2026", total: 6599.00, payment: "Card", status: "Delivered", items: ["Canvas Rucksack x1"] },
+            { id: "#6685-1033560", created: "10/03/2026", total: 10832.99, payment: "COD", status: "Delivered", items: ["Hiking Boots x1"] },
+            { id: "#6685-1033561", created: "05/03/2026", total: 3745.95, payment: "UPI", status: "Processing", items: ["Leather Belt x1"] },
+            { id: "#6685-1033562", created: "28/02/2026", total: 6699.99, payment: "Card", status: "Shipped", items: ["Merino Wool Sweater x2"] },
+            { id: "#6685-1033563", created: "20/02/2026", total: 4499.00, payment: "UPI", status: "Delivered", items: ["Solar Power Bank x1"] },
+            { id: "#6685-1033564", created: "15/02/2026", total: 3324.90, payment: "Card", status: "Cancelled", items: ["Multi-tool Pro x1"] },
+            { id: "#6685-1033565", created: "10/02/2026", total: 1299.99, payment: "COD", status: "Delivered", items: ["Bamboo Cutlery Set x3"] },
+            { id: "#6685-1033566", created: "05/02/2026", total: 2915.99, payment: "UPI", status: "Delivered", items: ["Insulated Water Bottle x2"] },
+            { id: "#6685-1033567", created: "28/01/2026", total: 1899.00, payment: "Card", status: "Processing", items: ["Emergency Flashlight x1"] }
+        ];
+
+        // Status badge styling mapping
+        function getStatusClass(status) {
+            switch(status.toLowerCase()) {
+                case 'delivered': return 'status-delivered';
+                case 'shipped': return 'status-shipped';
+                case 'processing': return 'status-processing';
+                case 'pending': return 'status-pending';
+                case 'cancelled': return 'status-cancelled';
+                default: return 'status-processing';
+            }
+        }
+
+        function getStatusIcon(status) {
+            switch(status.toLowerCase()) {
+                case 'delivered': return '<i class="fas fa-check-circle text-xs"></i>';
+                case 'shipped': return '<i class="fas fa-truck text-xs"></i>';
+                case 'processing': return '<i class="fas fa-spinner fa-pulse text-xs"></i>';
+                case 'cancelled': return '<i class="fas fa-times-circle text-xs"></i>';
+                default: return '<i class="fas fa-clock text-xs"></i>';
+            }
+        }
+
+        function formatPrice(price) {
+            return '₹' + price.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+        }
+
+        // Render orders table
+        function renderOrders() {
+            const tbody = document.getElementById('ordersTableBody');
+            const noOrdersMsg = document.getElementById('noOrdersMsg');
+            
+            if (!orders.length) {
+                tbody.innerHTML = '';
+                noOrdersMsg.classList.remove('hidden');
+                return;
+            }
+            
+            noOrdersMsg.classList.add('hidden');
+            
+            tbody.innerHTML = orders.map(order => `
+                <tr>
+                    <td class="font-mono text-[11px] font-semibold">${order.id}</td>
+                    <td class="text-xs">${order.created}</td>
+                    <td class="font-bold text-[#bc6c25] text-xs">${formatPrice(order.total)}</td>
+                    <td class="text-xs">
+                        <span class="flex items-center gap-1">
+                            <i class="fas ${order.payment === 'UPI' ? 'fa-mobile-alt' : order.payment === 'Card' ? 'fa-credit-card' : 'fa-money-bill-wave'} text-[10px] text-[#8a7a66]"></i>
+                            ${order.payment}
+                        </span>
+                    </td>
+                    <td>
+                        <span class="status-badge ${getStatusClass(order.status)}">
+                            ${getStatusIcon(order.status)}
+                            ${order.status}
+                        </span>
+                    </td>
+                    <td>
+                        <button class="view-details-btn" data-order-id="${order.id}">View</button>
+                    </td>
+                </tr>
+            `).join('');
+            
+            // Attach view details event listeners
+            document.querySelectorAll('.view-details-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const orderId = btn.getAttribute('data-order-id');
+                    const order = orders.find(o => o.id === orderId);
+                    if (order) {
+                        showOrderModal(order);
+                    }
+                });
+            });
+        }
+
+        // Show order details modal
+        function showOrderModal(order) {
+            const modal = document.getElementById('orderModal');
+            const modalContent = document.getElementById('modalContent');
+            
+            const itemsList = order.items.map(item => `<li class="flex justify-between py-2 border-b border-[#f0e2d4] text-sm"><span>${item}</span><span class="text-[#bc6c25]">✓</span></li>`).join('');
+            
+            modalContent.innerHTML = `
+                <div class="space-y-4">
+                    <div class="bg-[#fefaf6] rounded-xl p-3">
+                        <div class="flex justify-between mb-2">
+                            <span class="text-xs text-[#8a7a66]">Order ID</span>
+                            <span class="text-xs font-mono font-bold">${order.id}</span>
+                        </div>
+                        <div class="flex justify-between mb-2">
+                            <span class="text-xs text-[#8a7a66]">Order Date</span>
+                            <span class="text-xs">${order.created}</span>
+                        </div>
+                        <div class="flex justify-between mb-2">
+                            <span class="text-xs text-[#8a7a66]">Payment Method</span>
+                            <span class="text-xs">${order.payment}</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-xs text-[#8a7a66]">Status</span>
+                            <span class="status-badge ${getStatusClass(order.status)} text-[10px]">${getStatusIcon(order.status)} ${order.status}</span>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <h4 class="font-bold text-sm text-[#2c241a] mb-2">Items Ordered</h4>
+                        <ul class="bg-[#fefaf6] rounded-xl p-3">
+                            ${itemsList}
+                        </ul>
+                    </div>
+                    
+                    <div class="border-t border-[#f0e2d4] pt-3">
+                        <div class="flex justify-between font-bold">
+                            <span>Total Amount</span>
+                            <span class="text-[#bc6c25] text-lg">${formatPrice(order.total)}</span>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-gradient-to-r from-[#bc6c25]/10 to-[#e8a735]/10 rounded-xl p-3 text-center">
+                        <i class="fas fa-leaf text-[#bc6c25] text-sm"></i>
+                        <p class="text-[10px] text-[#5e4b38] mt-1">This order saved 1.2kg CO₂ emissions</p>
+                    </div>
+                    
+                    <button id="trackOrderBtn" class="w-full bg-[#bc6c25] text-white py-2 rounded-full text-sm font-semibold hover:bg-[#e8a735] transition">Track Order</button>
+                </div>
+            `;
+            
+            modal.classList.add('open');
+            
+            document.getElementById('trackOrderBtn')?.addEventListener('click', () => {
+                toast.show(`Tracking ${order.id} - Your order is ${order.status.toLowerCase()}!`);
+                modal.classList.remove('open');
+            });
+        }
+
+        function closeModal() {
+            document.getElementById('orderModal').classList.remove('open');
+        }
+
+        // Burger Menu
+        function initBurgerMenu() {
+            const burger = document.getElementById('burgerMenuBtn');
+            const nav = document.getElementById('horizontalNav');
+            let navOpen = false;
+            function toggleNav() {
+                if (navOpen) {
+                    nav.classList.remove('open');
+                    burger.classList.remove('open');
+                } else {
+                    nav.classList.add('open');
+                    burger.classList.add('open');
+                }
+                navOpen = !navOpen;
+            }
+            burger?.addEventListener('click', (e) => { e.stopPropagation(); toggleNav(); });
+            document.addEventListener('click', (e) => {
+                if (navOpen && !burger.contains(e.target) && !nav.contains(e.target)) {
+                    nav.classList.remove('open');
+                    burger.classList.remove('open');
+                    navOpen = false;
+                }
+            });
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            initBurgerMenu();
+            renderOrders();
+            
+            document.getElementById('closeModalBtn')?.addEventListener('click', closeModal);
+            document.getElementById('orderModal')?.addEventListener('click', (e) => {
+                if (e.target === document.getElementById('orderModal')) closeModal();
+            });
+            
+            document.getElementById('profileBtn')?.addEventListener('click', () => {
+                window.location.href = 'profile.html';
+            });
+        });
+    </script>
+     <script src="./js/script.js"></script>
+</body>
+
+</html>

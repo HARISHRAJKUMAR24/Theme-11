@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Tract | My Profile · Earth-Conscious Account</title>
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Font Awesome 6 Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="./css/style.css">
+    <style>
+        .profile-card {
+            border-radius: 2rem;
+            border: 1px solid #f0e2d4;
+            backdrop-filter: blur(2px);
+            background: rgba(255, 255, 255, 0.96);
+            transition: all 0.2s ease;
+        }
+
+        .input-focus:focus {
+            border-color: #bc6c25;
+            box-shadow: 0 0 0 3px rgba(188, 108, 37, 0.15);
+            outline: none;
+        }
+
+        .btn-save {
+            background: linear-gradient(95deg, #bc6c25, #e8a735);
+            transition: all 0.2s ease;
+        }
+
+        .btn-save:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px -6px rgba(188, 108, 37, 0.5);
+        }
+
+        .sidebar-link {
+            transition: all 0.2s ease;
+        }
+
+        .sidebar-link.active {
+            background: #bc6c2510;
+            color: #bc6c25;
+            border-left: 3px solid #bc6c25;
+        }
+
+        /* ===== UNIQUE TOAST STYLES - Nature-inspired, organic design ===== */
+        .toast-container {
+            position: fixed;
+            bottom: 24px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            pointer-events: none;
+        }
+
+        .toast-message {
+            backdrop-filter: blur(12px);
+            border-radius: 60px;
+            padding: 10px 24px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            letter-spacing: 0.3px;
+            box-shadow: 0 10px 30px -8px rgba(0, 0, 0, 0.25);
+            animation: toastFloatUp 0.4s cubic-bezier(0.34, 1.2, 0.64, 1) forwards;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            pointer-events: auto;
+            max-width: 320px;
+            width: max-content;
+            text-align: center;
+        }
+
+        @keyframes toastFloatUp {
+            0% {
+                opacity: 0;
+                transform: translateY(30px) scale(0.9);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .toast-message.hide-toast {
+            animation: toastFadeOut 0.3s ease forwards;
+        }
+
+        @keyframes toastFadeOut {
+            to {
+                opacity: 0;
+                transform: translateY(-10px) scale(0.95);
+            }
+        }
+
+        /* Success Toast - Earthy green gradient */
+        .toast-success {
+            background: linear-gradient(135deg, #2c5f2d 0%, #4a7c3f 100%);
+            color: #ffffff;
+            border-left: 4px solid #ffd966;
+        }
+
+        .toast-success i {
+            color: #ffd966;
+            font-size: 1rem;
+        }
+
+        /* Error Toast - Warm terracotta */
+        .toast-error {
+            background: linear-gradient(135deg, #8b3a2b 0%, #a0522d 100%);
+            color: #fff5ea;
+            border-left: 4px solid #ffb347;
+        }
+
+        .toast-error i {
+            color: #ffb347;
+            font-size: 1rem;
+        }
+
+        /* Info Toast - Deep forest */
+        .toast-info {
+            background: linear-gradient(135deg, #2c241a 0%, #3d2e1f 100%);
+            color: #ffebc2;
+            border-left: 4px solid #bc6c25;
+        }
+
+        .toast-info i {
+            color: #bc6c25;
+            font-size: 1rem;
+        }
+
+        /* Toast progress bar */
+        .toast-progress {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            height: 3px;
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 0 0 0 60px;
+            animation: progressShrink 2.5s linear forwards;
+        }
+
+        @keyframes progressShrink {
+            from {
+                width: 100%;
+            }
+
+            to {
+                width: 0%;
+            }
+        }
+
+        /* Responsive toast */
+        @media (max-width: 480px) {
+            .toast-message {
+                padding: 8px 20px;
+                font-size: 0.75rem;
+                max-width: 280px;
+            }
+        }
+    </style>
+</head>
+
+<body class="min-h-screen">
+
+    <!-- Toast Container (bottom center - unique position) -->
+    <div id="toastContainer" class="toast-container"></div>
+
+    <!-- Mobile container (same width as main index) -->
+    <div class="flex justify-center items-start min-h-screen p-3 md:p-6">
+        <div class="w-full max-w-[480px] md:max-w-[540px] lg:max-w-[580px] bg-transparent rounded-3xl overflow-hidden">
+
+            <!-- ========== SECTION 1: HEADER ========== -->
+            <div class="px-5 pt-5 pb-3 bg-gradient-to-r from-[#2c241a] to-[#4a3624] sticky top-0 z-10">
+                <div class="flex justify-between items-center gap-2 relative">
+                    <div class="burger-menu cursor-pointer flex-shrink-0" id="burgerMenuBtn">
+                        <div class="burger-line line-1"></div>
+                        <div class="burger-line line-2"></div>
+                        <div class="burger-line line-3"></div>
+                    </div>
+                    <div
+                        class="absolute left-1/2 transform -translate-x-1/2 flex items-center gap-2 pointer-events-none">
+                        <img src="https://picsum.photos/id/96/42/42" alt="Tract Logo"
+                            class="w-[42px] h-[42px] object-cover shadow-sm rounded-lg">
+                        <div>
+                            <h1 class="text-[1.65rem] font-bold tracking-tight text-white leading-tight">tract.</h1>
+                        </div>
+                    </div>
+                    <img id="profileBtn" src="https://randomuser.me/api/portraits/women/68.jpg" alt="Profile"
+                        class="profile-img">
+                </div>
+            </div>
+
+                <!-- ========== SECTION 2: HORIZONTAL NAV ========== -->
+                <div id="horizontalNav" class="horizontal-nav">
+                    <div class="nav-links-horizontal">
+                         <a href="index.html" class="nav-link-horizontal shop-all" data-nav="shop-all">🏠 Home</a>
+                        <a href="login.html" class="nav-link-horizontal shop-all" data-nav="shop-all">🔐 Login</a>
+                        <a href="register.html" class="nav-link-horizontal shop-all" data-nav="register">📲 Register</a>
+                        <a href="profile.html" class="nav-link-horizontal shop-all" data-nav="profile">👤 Profile</a>
+                        <a href="cart.html" class="nav-link-horizontal shop-all" data-nav="cart">🛒 Cart</a>
+                        <a href="category.html" class="nav-link-horizontal shop-all" data-nav="category">🗂️
+                            Category</a>
+                        <a href="orders.html" class="nav-link-horizontal shop-all" data-nav="orders">📦 Orders</a>
+                        <a href="product.html" class="nav-link-horizontal shop-all" data-nav="product">🛍️ Product</a>
+                        <a href="track-order.html" class="nav-link-horizontal shop-all" data-nav="track-order">🚚
+                            TrackOrder</a>
+                        <a href="delivery-areas.html" class="nav-link-horizontal shop-all"
+                            data-nav="delivery-areas">🗺️Delivery Areas</a>
+                        <div class="nav-link-horizontal" data-nav="sustainable">🎁 Dummy Page</div>
+                        <div class="nav-link-horizontal" data-nav="gifts">🎁  Dummy Page</div>
+                    </div>
+                </div>
+
+
+
+            <!-- Profile Content -->
+            <div class="bg-white rounded-b-3xl shadow-xl overflow-hidden mt-0">
+                <div class="p-5 md:p-6">
+                    <h1 class="text-2xl font-bold text-[#2c241a] text-center mb-2">My Profile</h1>
+                    <p class="text-xs text-center text-[#8a7a66] mb-6">Manage your account details</p>
+
+                    <div class="flex flex-col lg:flex-row gap-6">
+
+                        <!-- LEFT SIDEBAR -->
+                        <div class="w-full lg:w-2/5">
+                            <div class="profile-card p-5 shadow-md">
+                                <!-- Avatar with edit overlay -->
+                                <div class="flex flex-col items-center mb-5">
+                                    <div class="relative mb-3 group">
+                                        <img id="profileAvatar" src="https://randomuser.me/api/portraits/women/68.jpg"
+                                            alt="Profile"
+                                            class="w-28 h-28 rounded-full object-cover border-4 border-[#ffd966] shadow-md transition-all duration-300 group-hover:opacity-90">
+                                        <label for="photoUpload"
+                                            class="absolute bottom-1 right-1 w-8 h-8 bg-[#bc6c25] rounded-full flex items-center justify-center cursor-pointer hover:bg-[#e8a735] transition shadow-md">
+                                            <i class="fas fa-camera text-white text-xs"></i>
+                                        </label>
+                                        <input type="file" id="photoUpload" accept="image/*" class="hidden">
+                                    </div>
+                                    <h2 id="displayName" class="text-xl font-bold text-[#2c241a]">Sarah Morgan</h2>
+                                    <p id="displayEmail" class="text-sm text-[#8a7a66]">sarah@tract.com</p>
+                                    <div class="flex gap-2 mt-2">
+                                        <span
+                                            class="bg-[#f3efea] text-[#6b5a48] text-[10px] font-bold px-2 py-1 rounded-full">👑
+                                            Premium Customer</span>
+                                    </div>
+                                </div>
+
+                                <!-- Stats cards with See Details buttons -->
+                                <div class="grid grid-cols-2 gap-3 mb-5">
+                                    <!-- Orders Card -->
+                                    <div class="bg-gradient-to-br from-[#fefaf6] to-white rounded-xl p-3 text-center border border-[#f0e2d4] transition-all duration-300 hover:shadow-lg hover:-translate-y-1 group cursor-pointer"
+                                        onclick="showWishlistDetails()">
+                                        <div class="w-10 h-10 flex items-center justify-center mx-auto mb-1">
+                                            <i class="fas fa-shopping-bag text-[#bc6c25] text-base"></i>
+                                        </div>
+                                        <p class="text-2xl font-black text-[#2c241a] mt-1">12</p>
+                                        <p
+                                            class="text-[10px] text-[#8a7a66] font-semibold uppercase tracking-wider mb-2">
+                                            Total Orders</p>
+                                        <button class="w-full mt-1 py-1.5 rounded-full text-[10px] font-bold transition-all duration-300 
+                       bg-gradient-to-r from-[#bc6c25] to-[#e8a735] text-white 
+                       hover:shadow-md hover:scale-105
+                       flex items-center justify-center gap-1">
+                                            <i class="fas fa-eye text-[9px]"></i>
+                                            <span>See Details</span>
+                                        </button>
+                                    </div>
+
+                                    <!-- Wishlist Card -->
+                                    <div class="bg-gradient-to-br from-[#fefaf6] to-white rounded-xl p-3 text-center border border-[#f0e2d4] transition-all duration-300 hover:shadow-lg hover:-translate-y-1 group cursor-pointer"
+                                        onclick="showWishlistDetails()">
+                                        <div class="w-10 h-10 flex items-center justify-center mx-auto mb-1">
+                                            <i class="fas fa-heart text-[#bc6c25] text-base"></i>
+                                        </div>
+                                        <p class="text-2xl font-black text-[#2c241a] mt-1">8</p>
+                                        <p
+                                            class="text-[10px] text-[#8a7a66] font-semibold uppercase tracking-wider mb-2">
+                                            Wishlist Items</p>
+                                        <button class="w-full mt-1 py-1.5 rounded-full text-[10px] font-bold transition-all duration-300 
+                       bg-gradient-to-r from-[#bc6c25] to-[#e8a735] text-white 
+                       hover:shadow-md hover:scale-105
+                       flex items-center justify-center gap-1">
+                                            <i class="fas fa-eye text-[9px]"></i>
+                                            <span>See Details</span>
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <script>
+                                    // Simple alert functions - no toast dependency
+                                    function showOrdersDetails() {
+                                        alert('📦 Order History\n\n✅ 12 Completed Orders\n🚚 2 In Transit\n⭐ 10 Eco Points Earned');
+                                    }
+
+                                    function showWishlistDetails() {
+                                        alert('❤️ Your Wishlist\n\n🎒 Canvas Rucksack\n🧥 Merino Wool Sweater\n🥾 Hiking Boots\n+5 more items');
+                                    }
+                                </script>
+
+                                <!-- Navigation links -->
+                                <div class="space-y-2">
+                                    <a href="#"
+                                        class="sidebar-link active flex items-center gap-3 p-3 rounded-xl bg-[#bc6c25]/5 text-[#bc6c25] transition">
+                                        <div
+                                            class="w-10 h-10 rounded-full bg-white shadow-sm flex items-center justify-center">
+                                            <i class="fas fa-user text-[#bc6c25]"></i>
+                                        </div>
+                                        <span class="font-medium">Profile Information</span>
+                                    </a>
+                                    <a href="#"
+                                        class="sidebar-link flex items-center gap-3 p-3 rounded-xl text-[#5e4b38] hover:bg-[#f5efe8] transition">
+                                        <div
+                                            class="w-10 h-10 rounded-full bg-white shadow-sm flex items-center justify-center">
+                                            <i class="fas fa-lock text-[#8a7a66]"></i>
+                                        </div>
+                                        <span class="font-medium">Security & Password</span>
+                                    </a>
+                                    <a href="#"
+                                        class="sidebar-link flex items-center gap-3 p-3 rounded-xl text-[#5e4b38] hover:bg-[#f5efe8] transition">
+                                        <div
+                                            class="w-10 h-10 rounded-full bg-white shadow-sm flex items-center justify-center">
+                                            <i class="fas fa-truck text-[#8a7a66]"></i>
+                                        </div>
+                                        <span class="font-medium">Track My Order</span>
+                                    </a>
+                                    <a href="index.html"
+                                        class="sidebar-link flex items-center gap-3 p-3 rounded-xl text-[#5e4b38] hover:bg-red-50 hover:text-red-500 transition">
+                                        <div
+                                            class="w-10 h-10 rounded-full bg-white shadow-sm flex items-center justify-center">
+                                            <i class="fas fa-sign-out-alt text-[#8a7a66]"></i>
+                                        </div>
+                                        <span class="font-medium">Logout</span>
+                                    </a>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <!-- RIGHT EDIT FORM -->
+                        <div class="w-full lg:w-3/5">
+                            <div class="profile-card p-5 shadow-md">
+                                <div class="flex items-center gap-2 mb-5 pb-2 border-b border-[#f0e2d4]">
+                                    <i class="fas fa-pen text-[#bc6c25] text-lg"></i>
+                                    <h3 class="text-lg font-bold text-[#2c241a]">Edit Profile Details</h3>
+                                </div>
+
+                                <form id="profileForm" class="space-y-4">
+                                    <div>
+                                        <label class="block text-xs font-semibold text-[#4b3621] mb-1.5">
+                                            <i class="far fa-user mr-1 text-[#bc6c25]"></i> Full Name
+                                        </label>
+                                        <input type="text" id="fullName" name="name" value="Sarah Morgan"
+                                            class="w-full border border-[#e8e2db] rounded-xl py-3 px-4 text-sm bg-[#fefcf9] input-focus transition">
+                                        <p class="text-[10px] text-red-500 mt-1 hidden" id="nameError">Name is required
+                                        </p>
+                                    </div>
+
+                                    <div>
+                                        <label class="block text-xs font-semibold text-[#4b3621] mb-1.5">
+                                            <i class="far fa-envelope mr-1 text-[#bc6c25]"></i> Email Address
+                                        </label>
+                                        <input type="email" id="email" name="email" value="sarah@tract.com"
+                                            class="w-full border border-[#e8e2db] rounded-xl py-3 px-4 text-sm bg-[#fefcf9] input-focus transition">
+                                        <p class="text-[10px] text-red-500 mt-1 hidden" id="emailError">Valid email
+                                            required</p>
+                                    </div>
+
+                                    <div>
+                                        <label class="block text-xs font-semibold text-[#4b3621] mb-1.5">
+                                            <i class="fas fa-phone-alt mr-1 text-[#bc6c25]"></i> Phone Number
+                                        </label>
+                                        <input type="tel" id="phone" name="phone" value="+1 (555) 789-1234"
+                                            class="w-full border border-[#e8e2db] rounded-xl py-3 px-4 text-sm bg-[#fefcf9] input-focus transition">
+                                        <p class="text-[10px] text-red-500 mt-1 hidden" id="phoneError">Phone number
+                                            required</p>
+                                    </div>
+
+                                    <div>
+                                        <label class="block text-xs font-semibold text-[#4b3621] mb-1.5">
+                                            <i class="fas fa-leaf mr-1 text-[#bc6c25]"></i> Bio (optional)
+                                        </label>
+                                        <textarea id="bio" rows="2"
+                                            placeholder="Adventurer, nature lover, earth-conscious explorer..."
+                                            class="w-full border border-[#e8e2db] rounded-xl py-3 px-4 text-sm bg-[#fefcf9] input-focus transition resize-none">🌲 Outdoor enthusiast | Sustainable living advocate</textarea>
+                                    </div>
+
+                                    <div class="pt-2">
+                                        <button type="submit" id="saveBtn"
+                                            class="btn-save w-full rounded-full py-3.5 text-white font-bold text-sm shadow-md flex items-center justify-center gap-2 transition-all">
+                                            <i class="fas fa-save text-xs"></i> Save Changes
+                                        </button>
+                                    </div>
+                                </form>
+
+                                <div class="mt-5 pt-3 text-center border-t border-[#f0e2d4]">
+                                    <p class="text-[10px] text-[#a89882]">
+                                        <i class="fas fa-shield-alt text-[#bc6c25] mr-1"></i>
+                                        Your data is secure with Tract
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <footer class="bg-[#1a1612] text-white mt-2">
+                    <div class="px-5 py-4 text-center">
+                        <p class="text-[9px] text-[#7a6a56]">© 2026 tract — earth-conscious expedition goods</p>
+                    </div>
+                </footer>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ========== UNIQUE TOAST SYSTEM ==========
+        class TractToast {
+            constructor() {
+                this.container = document.getElementById('toastContainer');
+                if (!this.container) {
+                    const div = document.createElement('div');
+                    div.id = 'toastContainer';
+                    div.className = 'toast-container';
+                    document.body.appendChild(div);
+                    this.container = div;
+                }
+            }
+
+            show(message, type = 'success', duration = 2800) {
+                const toast = document.createElement('div');
+                toast.className = `toast-message toast-${type}`;
+
+                // Icon based on type
+                let iconHtml = '';
+                switch (type) {
+                    case 'success':
+                        iconHtml = '<i class="fas fa-check-circle"></i>';
+                        break;
+                    case 'error':
+                        iconHtml = '<i class="fas fa-exclamation-triangle"></i>';
+                        break;
+                    case 'info':
+                        iconHtml = '<i class="fas fa-leaf"></i>';
+                        break;
+                    default:
+                        iconHtml = '<i class="fas fa-check-circle"></i>';
+                }
+
+                toast.innerHTML = `
+                    ${iconHtml}
+                    <span>${message}</span>
+                    <div class="toast-progress"></div>
+                `;
+
+                this.container.appendChild(toast);
+
+                // Auto remove after duration
+                setTimeout(() => {
+                    toast.classList.add('hide-toast');
+                    setTimeout(() => {
+                        if (toast.parentNode) toast.remove();
+                    }, 300);
+                }, duration);
+
+                return toast;
+            }
+
+            success(msg) { return this.show(msg, 'success'); }
+            error(msg) { return this.show(msg, 'error'); }
+            info(msg) { return this.show(msg, 'info'); }
+        }
+
+        const toast = new TractToast();
+
+        // ========== PROFILE EDIT & AVATAR UPLOAD ==========
+        (function () {
+            const profileForm = document.getElementById('profileForm');
+            const fullNameInput = document.getElementById('fullName');
+            const emailInput = document.getElementById('email');
+            const phoneInput = document.getElementById('phone');
+            const bioTextarea = document.getElementById('bio');
+            const displayNameSpan = document.getElementById('displayName');
+            const displayEmailSpan = document.getElementById('displayEmail');
+            const profileAvatar = document.getElementById('profileAvatar');
+            const photoUpload = document.getElementById('photoUpload');
+            const saveBtn = document.getElementById('saveBtn');
+
+            const nameError = document.getElementById('nameError');
+            const emailError = document.getElementById('emailError');
+            const phoneError = document.getElementById('phoneError');
+
+            function resetErrors() {
+                nameError?.classList.add('hidden');
+                emailError?.classList.add('hidden');
+                phoneError?.classList.add('hidden');
+                fullNameInput?.classList.remove('border-red-400');
+                emailInput?.classList.remove('border-red-400');
+                phoneInput?.classList.remove('border-red-400');
+            }
+
+            function updateDisplayInfo() {
+                if (displayNameSpan) displayNameSpan.innerText = fullNameInput.value.trim() || 'Tract Explorer';
+                if (displayEmailSpan) displayEmailSpan.innerText = emailInput.value.trim() || 'hello@tract.com';
+            }
+
+            // Avatar preview
+            if (photoUpload) {
+                photoUpload.addEventListener('change', function (e) {
+                    const file = e.target.files[0];
+                    if (file && file.type.startsWith('image/')) {
+                        const reader = new FileReader();
+                        reader.onload = function (ev) {
+                            profileAvatar.src = ev.target.result;
+                            toast.success('📸 Profile photo updated!');
+                        };
+                        reader.readAsDataURL(file);
+                    } else if (file) {
+                        toast.error('Please select a valid image file');
+                    }
+                });
+            }
+
+            // Form validation and save
+            profileForm?.addEventListener('submit', (e) => {
+                e.preventDefault();
+                resetErrors();
+                let isValid = true;
+
+                const nameVal = fullNameInput?.value.trim() || '';
+                const emailVal = emailInput?.value.trim() || '';
+                const phoneVal = phoneInput?.value.trim() || '';
+
+                if (nameVal === '') {
+                    if (nameError) nameError.classList.remove('hidden');
+                    if (fullNameInput) fullNameInput.classList.add('border-red-400');
+                    isValid = false;
+                }
+
+                if (emailVal === '') {
+                    if (emailError) {
+                        emailError.innerText = 'Email address required';
+                        emailError.classList.remove('hidden');
+                    }
+                    if (emailInput) emailInput.classList.add('border-red-400');
+                    isValid = false;
+                } else if (!/^\S+@\S+\.\S+$/.test(emailVal)) {
+                    if (emailError) {
+                        emailError.innerText = 'Enter a valid email';
+                        emailError.classList.remove('hidden');
+                    }
+                    if (emailInput) emailInput.classList.add('border-red-400');
+                    isValid = false;
+                }
+
+                if (phoneVal === '') {
+                    if (phoneError) {
+                        phoneError.innerText = 'Phone number required';
+                        phoneError.classList.remove('hidden');
+                    }
+                    if (phoneInput) phoneInput.classList.add('border-red-400');
+                    isValid = false;
+                } else if (phoneVal.length < 5) {
+                    if (phoneError) {
+                        phoneError.innerText = 'Enter a valid phone number';
+                        phoneError.classList.remove('hidden');
+                    }
+                    if (phoneInput) phoneInput.classList.add('border-red-400');
+                    isValid = false;
+                }
+
+                if (isValid) {
+                    updateDisplayInfo();
+
+                    const originalBtnHtml = saveBtn.innerHTML;
+                    saveBtn.disabled = true;
+                    saveBtn.innerHTML = '<i class="fas fa-spinner fa-spin text-xs"></i> Saving...';
+
+                    setTimeout(() => {
+                        const profileData = {
+                            name: nameVal,
+                            email: emailVal,
+                            phone: phoneVal,
+                            bio: bioTextarea?.value || '',
+                            avatar: profileAvatar.src
+                        };
+                        localStorage.setItem('tract_profile', JSON.stringify(profileData));
+
+                        toast.success('✅ Profile updated successfully!');
+
+                        saveBtn.disabled = false;
+                        saveBtn.innerHTML = originalBtnHtml;
+                    }, 800);
+                } else {
+                    toast.error('❌ Please fix the errors above');
+                }
+            });
+
+            // Load saved profile
+            function loadSavedProfile() {
+                const saved = localStorage.getItem('tract_profile');
+                if (saved) {
+                    try {
+                        const data = JSON.parse(saved);
+                        if (data.name) fullNameInput.value = data.name;
+                        if (data.email) emailInput.value = data.email;
+                        if (data.phone) phoneInput.value = data.phone;
+                        if (data.bio) bioTextarea.value = data.bio;
+                        if (data.avatar && data.avatar !== profileAvatar.src) profileAvatar.src = data.avatar;
+                        updateDisplayInfo();
+                    } catch (e) { }
+                }
+            }
+
+            loadSavedProfile();
+
+            const inputs = [fullNameInput, emailInput, phoneInput];
+            inputs.forEach(inp => {
+                if (inp) {
+                    inp.addEventListener('focus', () => {
+                        inp.classList.remove('border-red-400');
+                        if (inp.id === 'fullName') nameError?.classList.add('hidden');
+                        if (inp.id === 'email') emailError?.classList.add('hidden');
+                        if (inp.id === 'phone') phoneError?.classList.add('hidden');
+                    });
+                }
+            });
+
+            // Sidebar interactions
+            const sidebarLinks = document.querySelectorAll('.sidebar-link');
+            sidebarLinks.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    const text = link.querySelector('span')?.innerText || '';
+                    if (text.includes('Security') || text.includes('Address')) {
+                        e.preventDefault();
+                        toast.info(`🌿 "${text}" section — coming soon!`);
+                    }
+                    if (text.includes('Logout')) {
+                        e.preventDefault();
+                        toast.success('👋 Logged out safely');
+                        setTimeout(() => {
+                            localStorage.removeItem('tract_profile');
+                            window.location.href = 'index.html';
+                        }, 1000);
+                    }
+                });
+            });
+        })();
+    </script>
+    <script src="./js/script.js"></script>
+</body>
+
+</html>

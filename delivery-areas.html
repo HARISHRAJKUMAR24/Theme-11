@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Tract | Delivery Areas · Earth-Conscious Goods</title>
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Font Awesome 6 Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="stylesheet" href="./css/style.css">
+    <style>
+        * {
+            -webkit-tap-highlight-color: transparent;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #f4f2ef;
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+        }
+
+        ::-webkit-scrollbar {
+            width: 5px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #e7e2db;
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #bc6c25;
+            border-radius: 10px;
+        }
+
+        /* Burger Menu */
+        .burger-menu {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            padding: 8px 4px;
+            cursor: pointer;
+            z-index: 20;
+            width: 32px;
+        }
+
+        .burger-line {
+            width: 24px;
+            height: 3px;
+            background: linear-gradient(90deg, #ffd966, #bc6c25);
+            border-radius: 4px;
+            transition: all 0.2s ease;
+        }
+
+        .burger-menu:not(.open) .line-1 {
+            animation: pulseLine1 1.2s ease-in-out infinite;
+        }
+
+        .burger-menu:not(.open) .line-2 {
+            animation: pulseLine2 1.2s ease-in-out infinite;
+        }
+
+        .burger-menu:not(.open) .line-3 {
+            animation: pulseLine3 1.2s ease-in-out infinite;
+        }
+
+        @keyframes pulseLine1 {
+
+            0%,
+            100% {
+                width: 18px;
+                opacity: 0.5;
+            }
+
+            50% {
+                width: 28px;
+                opacity: 1;
+                background: linear-gradient(90deg, #ffd966, #e8a735);
+            }
+        }
+
+        @keyframes pulseLine2 {
+
+            0%,
+            100% {
+                width: 28px;
+                opacity: 0.7;
+            }
+
+            50% {
+                width: 18px;
+                opacity: 1;
+                background: linear-gradient(90deg, #ffd966, #e8a735);
+            }
+        }
+
+        @keyframes pulseLine3 {
+
+            0%,
+            100% {
+                width: 22px;
+                opacity: 0.5;
+            }
+
+            50% {
+                width: 32px;
+                opacity: 1;
+                background: linear-gradient(90deg, #ffd966, #e8a735);
+            }
+        }
+
+        .burger-menu.open .line-1 {
+            animation: none;
+            transform: rotate(45deg) translate(5px, 6px);
+            width: 24px;
+        }
+
+        .burger-menu.open .line-2 {
+            animation: none;
+            opacity: 0;
+            width: 24px;
+        }
+
+        .burger-menu.open .line-3 {
+            animation: none;
+            transform: rotate(-45deg) translate(6px, -7px);
+            width: 24px;
+        }
+
+        .horizontal-nav {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            background: linear-gradient(135deg, #2c241a 0%, #3d2e1f 100%);
+        }
+
+        .horizontal-nav.open {
+            max-height: 300px;
+        }
+
+        .nav-links-horizontal {
+            display: flex;
+            flex-direction: row;
+            gap: 8px;
+            padding: 12px 16px;
+            overflow-x: auto;
+            scrollbar-width: thin;
+            white-space: nowrap;
+        }
+
+        .nav-link-horizontal {
+            padding: 10px 20px;
+            border-radius: 40px;
+            background: rgba(255, 255, 255, 0.08);
+            color: #f5efe6;
+            font-weight: 500;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            white-space: nowrap;
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(255, 217, 102, 0.2);
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .nav-link-horizontal.shop-all {
+            background: linear-gradient(90deg, #bc6c25, #e8a735);
+            color: white;
+            border-color: #ffd966;
+        }
+
+        .profile-img {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid #ffd966;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        /* Location Card */
+        .location-card {
+            background: white;
+            border: 1px solid #f0e2d4;
+            border-radius: 1.5rem;
+            transition: all 0.3s ease;
+            overflow: hidden;
+        }
+
+        .location-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 30px -12px rgba(0, 0, 0, 0.15);
+            border-color: #bc6c25;
+        }
+
+        .number-badge {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, #bc6c25, #e8a735);
+            border-radius: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 1.25rem;
+            box-shadow: 0 4px 10px rgba(188, 108, 37, 0.3);
+        }
+
+        .free-badge {
+            background: linear-gradient(135deg, #2c5f2d, #4a7c3f);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 30px;
+            font-size: 0.7rem;
+            font-weight: 600;
+        }
+
+        .info-row {
+            transition: all 0.2s ease;
+        }
+
+        .info-row:hover {
+            background: #fefaf6;
+            border-radius: 0.75rem;
+        }
+
+        .icon-color {
+            color: #bc6c25;
+        }
+
+        /* Hero Section */
+        .hero-gradient {
+            background: linear-gradient(135deg, rgba(188, 108, 37, 0.05) 0%, rgba(232, 167, 53, 0.08) 50%, rgba(188, 108, 37, 0.05) 100%);
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="flex justify-center items-start min-h-screen p-3 md:p-6">
+        <div class="w-full max-w-[480px] md:max-w-[540px] lg:max-w-[580px] bg-transparent rounded-3xl overflow-hidden">
+
+            <!-- Header -->
+            <div class="px-5 pt-5 pb-3 bg-gradient-to-r from-[#2c241a] to-[#4a3624] sticky top-0 z-10 rounded-t-3xl">
+                <div class="flex justify-between items-center gap-2 relative">
+                    <div class="burger-menu cursor-pointer flex-shrink-0" id="burgerMenuBtn">
+                        <div class="burger-line line-1"></div>
+                        <div class="burger-line line-2"></div>
+                        <div class="burger-line line-3"></div>
+                    </div>
+                    <div
+                        class="absolute left-1/2 transform -translate-x-1/2 flex items-center gap-2 pointer-events-none">
+                        <img src="https://picsum.photos/id/96/42/42" alt="Tract Logo"
+                            class="w-[42px] h-[42px] object-cover shadow-sm rounded-lg">
+                        <div>
+                            <h1 class="text-[1.65rem] font-bold tracking-tight text-white leading-tight">tract.</h1>
+                        </div>
+                    </div>
+                    <img id="profileBtn" src="https://randomuser.me/api/portraits/women/68.jpg" alt="Profile"
+                        class="profile-img">
+                </div>
+            </div>
+
+            <!-- ========== SECTION 2: HORIZONTAL NAV ========== -->
+            <div id="horizontalNav" class="horizontal-nav">
+                <div class="nav-links-horizontal">
+                    <a href="index.html" class="nav-link-horizontal shop-all" data-nav="shop-all">🏠 Home</a>
+                    <a href="login.html" class="nav-link-horizontal shop-all" data-nav="shop-all">🔐 Login</a>
+                    <a href="register.html" class="nav-link-horizontal shop-all" data-nav="register">📲 Register</a>
+                    <a href="profile.html" class="nav-link-horizontal shop-all" data-nav="profile">👤 Profile</a>
+                    <a href="cart.html" class="nav-link-horizontal shop-all" data-nav="cart">🛒 Cart</a>
+                    <a href="category.html" class="nav-link-horizontal shop-all" data-nav="category">🗂️
+                        Category</a>
+                    <a href="orders.html" class="nav-link-horizontal shop-all" data-nav="orders">📦 Orders</a>
+                    <a href="product.html" class="nav-link-horizontal shop-all" data-nav="product">🛍️ Product</a>
+                    <a href="track-order.html" class="nav-link-horizontal shop-all" data-nav="track-order">🚚
+                        TrackOrder</a>
+                    <a href="delivery-areas.html" class="nav-link-horizontal shop-all"
+                        data-nav="delivery-areas">🗺️Delivery Areas</a>
+                    <div class="nav-link-horizontal" data-nav="sustainable">🎁 Dummy Page</div>
+                    <div class="nav-link-horizontal" data-nav="gifts">🎁 Dummy Page</div>
+                </div>
+            </div>
+
+            <!-- Delivery Content -->
+            <div class="bg-white rounded-b-3xl shadow-xl overflow-hidden mt-0">
+
+                <!-- Hero Section -->
+                <div class="hero-gradient py-8 px-5 text-center border-b border-[#f0e2d4]">
+                    <div class="inline-flex items-center justify-center w-16 h-16 bg-white rounded-2xl shadow-md mb-4">
+                        <i class="fas fa-truck-fast text-[#bc6c25] text-2xl"></i>
+                    </div>
+                    <h1 class="text-2xl font-bold text-[#2c241a]">Delivery Areas</h1>
+                    <p class="text-xs text-[#8a7a66] mt-2 max-w-xs mx-auto">
+                        We bring earth-conscious goods to your doorstep. Check if we deliver to your location!
+                    </p>
+                </div>
+
+                <div class="p-5 md:p-6">
+
+                    <!-- Delivery Areas Section -->
+                    <div class="mb-8">
+                        <div class="flex items-center gap-2 mb-4">
+                            <i class="fas fa-map-marker-alt text-[#bc6c25] text-lg"></i>
+                            <h2 class="text-lg font-bold text-[#2c241a]">Our Delivery Zones</h2>
+                        </div>
+                        <div class="grid grid-cols-1 gap-4">
+                            <!-- Delivery Area 1 -->
+                            <div class="location-card p-4">
+                                <div class="flex items-start gap-4">
+                                    <div class="number-badge flex-shrink-0">1</div>
+                                    <div class="flex-1">
+                                        <div class="flex flex-wrap items-center justify-between gap-2 mb-3">
+                                            <h3 class="font-bold text-[#2c241a]">Metro City Central</h3>
+                                            <span class="free-badge"><i class="fas fa-gift text-xs mr-1"></i>FREE
+                                                Delivery</span>
+                                        </div>
+                                        <div class="space-y-2 text-sm">
+                                            <div class="info-row flex items-center gap-2 p-2">
+                                                <i class="fas fa-location-dot text-[#bc6c25] w-5 text-xs"></i>
+                                                <span class="text-[#6b5a48]">Postal Codes:</span>
+                                                <span class="text-[#2c241a] font-medium">100001-100050,
+                                                    110001-110020</span>
+                                            </div>
+                                            <div class="info-row flex items-center gap-2 p-2">
+                                                <i class="fas fa-clock text-[#bc6c25] w-5 text-xs"></i>
+                                                <span class="text-[#6b5a48]">Delivery Time:</span>
+                                                <span class="text-[#2c241a] font-medium">1-2 Business Days</span>
+                                            </div>
+                                            <div class="info-row flex items-start gap-2 p-2">
+                                                <i class="fas fa-info-circle text-[#bc6c25] w-5 text-xs mt-0.5"></i>
+                                                <span class="text-[#8a7a66] text-xs">Free shipping on orders above
+                                                    ₹5000</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Delivery Area 2 -->
+                            <div class="location-card p-4">
+                                <div class="flex items-start gap-4">
+                                    <div class="number-badge flex-shrink-0">2</div>
+                                    <div class="flex-1">
+                                        <div class="flex flex-wrap items-center justify-between gap-2 mb-3">
+                                            <h3 class="font-bold text-[#2c241a]">Suburban District</h3>
+                                            <span
+                                                class="bg-[#bc6c25]/10 text-[#bc6c25] px-3 py-1 rounded-full text-xs font-semibold">₹49
+                                                Delivery</span>
+                                        </div>
+                                        <div class="space-y-2 text-sm">
+                                            <div class="info-row flex items-center gap-2 p-2">
+                                                <i class="fas fa-location-dot text-[#bc6c25] w-5 text-xs"></i>
+                                                <span class="text-[#6b5a48]">Postal Codes:</span>
+                                                <span class="text-[#2c241a] font-medium">201001-201050,
+                                                    301001-301020</span>
+                                            </div>
+                                            <div class="info-row flex items-center gap-2 p-2">
+                                                <i class="fas fa-clock text-[#bc6c25] w-5 text-xs"></i>
+                                                <span class="text-[#6b5a48]">Delivery Time:</span>
+                                                <span class="text-[#2c241a] font-medium">2-3 Business Days</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Delivery Area 3 -->
+                            <div class="location-card p-4">
+                                <div class="flex items-start gap-4">
+                                    <div class="number-badge flex-shrink-0">3</div>
+                                    <div class="flex-1">
+                                        <div class="flex flex-wrap items-center justify-between gap-2 mb-3">
+                                            <h3 class="font-bold text-[#2c241a]">Rural & Remote Areas</h3>
+                                            <span
+                                                class="bg-[#bc6c25]/10 text-[#bc6c25] px-3 py-1 rounded-full text-xs font-semibold">₹99
+                                                Delivery</span>
+                                        </div>
+                                        <div class="space-y-2 text-sm">
+                                            <div class="info-row flex items-center gap-2 p-2">
+                                                <i class="fas fa-location-dot text-[#bc6c25] w-5 text-xs"></i>
+                                                <span class="text-[#6b5a48]">Postal Codes:</span>
+                                                <span class="text-[#2c241a] font-medium">401001-401020,
+                                                    501001-501015</span>
+                                            </div>
+                                            <div class="info-row flex items-center gap-2 p-2">
+                                                <i class="fas fa-clock text-[#bc6c25] w-5 text-xs"></i>
+                                                <span class="text-[#6b5a48]">Delivery Time:</span>
+                                                <span class="text-[#2c241a] font-medium">4-5 Business Days</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Divider -->
+                    <div class="border-t border-[#f0e2d4] my-6"></div>
+
+                    <!-- Our Physical Stores Section -->
+                    <div class="mb-6">
+                        <div class="flex items-center gap-2 mb-4">
+                            <i class="fas fa-store text-[#bc6c25] text-lg"></i>
+                            <h2 class="text-lg font-bold text-[#2c241a]">Our Physical Stores</h2>
+                        </div>
+                        <div class="grid grid-cols-1 gap-4">
+                            <!-- Store 1 -->
+                            <div class="location-card p-4">
+                                <div class="flex items-start gap-4">
+                                    <div
+                                        class="w-12 h-12 bg-[#fefaf6] rounded-xl flex items-center justify-center flex-shrink-0 border border-[#f0e2d4]">
+                                        <i class="fas fa-warehouse text-[#bc6c25] text-xl"></i>
+                                    </div>
+                                    <div class="flex-1">
+                                        <h3 class="font-bold text-[#2c241a]">Tract Flagship Store</h3>
+                                        <p class="text-xs text-[#8a7a66] mt-1">123 Wilderness Avenue, Portland, OR 97201
+                                        </p>
+                                        <div class="flex flex-wrap gap-3 mt-3 text-xs">
+                                            <span class="flex items-center gap-1 text-[#6b5a48]"><i
+                                                    class="fas fa-phone text-[#bc6c25]"></i> +1 (800) 555-7426</span>
+                                            <span class="flex items-center gap-1 text-[#6b5a48]"><i
+                                                    class="fas fa-envelope text-[#bc6c25]"></i>
+                                                store@tractgoods.com</span>
+                                        </div>
+                                        <div class="mt-3 pt-2 border-t border-[#f0e2d4]">
+                                            <p class="text-[10px] text-[#8a7a66]"><i class="far fa-clock mr-1"></i>
+                                                Mon-Sat: 10AM - 8PM | Sun: 12PM - 6PM</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Store 2 -->
+                            <div class="location-card p-4">
+                                <div class="flex items-start gap-4">
+                                    <div
+                                        class="w-12 h-12 bg-[#fefaf6] rounded-xl flex items-center justify-center flex-shrink-0 border border-[#f0e2d4]">
+                                        <i class="fas fa-store text-[#bc6c25] text-xl"></i>
+                                    </div>
+                                    <div class="flex-1">
+                                        <h3 class="font-bold text-[#2c241a]">Tract Downtown Outpost</h3>
+                                        <p class="text-xs text-[#8a7a66] mt-1">456 Eco Lane, Austin, TX 78701</p>
+                                        <div class="flex flex-wrap gap-3 mt-3 text-xs">
+                                            <span class="flex items-center gap-1 text-[#6b5a48]"><i
+                                                    class="fas fa-phone text-[#bc6c25]"></i> +1 (512) 555-8923</span>
+                                            <span class="flex items-center gap-1 text-[#6b5a48]"><i
+                                                    class="fas fa-envelope text-[#bc6c25]"></i>
+                                                austin@tractgoods.com</span>
+                                        </div>
+                                        <div class="mt-3 pt-2 border-t border-[#f0e2d4]">
+                                            <p class="text-[10px] text-[#8a7a66]"><i class="far fa-clock mr-1"></i>
+                                                Mon-Sat: 9AM - 7PM | Closed Sunday</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Store 3 -->
+                            <div class="location-card p-4">
+                                <div class="flex items-start gap-4">
+                                    <div
+                                        class="w-12 h-12 bg-[#fefaf6] rounded-xl flex items-center justify-center flex-shrink-0 border border-[#f0e2d4]">
+                                        <i class="fas fa-tree text-[#bc6c25] text-xl"></i>
+                                    </div>
+                                    <div class="flex-1">
+                                        <h3 class="font-bold text-[#2c241a]">Tract Mountain Hub</h3>
+                                        <p class="text-xs text-[#8a7a66] mt-1">789 Summit Road, Boulder, CO 80302</p>
+                                        <div class="flex flex-wrap gap-3 mt-3 text-xs">
+                                            <span class="flex items-center gap-1 text-[#6b5a48]"><i
+                                                    class="fas fa-phone text-[#bc6c25]"></i> +1 (303) 555-1045</span>
+                                            <span class="flex items-center gap-1 text-[#6b5a48]"><i
+                                                    class="fas fa-envelope text-[#bc6c25]"></i>
+                                                boulder@tractgoods.com</span>
+                                        </div>
+                                        <div class="mt-3 pt-2 border-t border-[#f0e2d4]">
+                                            <p class="text-[10px] text-[#8a7a66]"><i class="far fa-clock mr-1"></i>
+                                                Wed-Mon: 10AM - 6PM | Tue Closed</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- CTA Section -->
+                    <div class="mt-6 text-center">
+                        <a href="category.html"
+                            class="inline-flex items-center gap-2 bg-gradient-to-r from-[#bc6c25] to-[#e8a735] text-white px-6 py-3 rounded-full text-sm font-semibold shadow-md hover:shadow-lg transition-all">
+                            <i class="fas fa-shopping-bag text-xs"></i> Start Shopping
+                            <i class="fas fa-arrow-right text-xs"></i>
+                        </a>
+                        <p class="text-[9px] text-[#a89882] mt-3">Free shipping on orders over ₹5000</p>
+                    </div>
+
+                </div>
+
+                <!-- Footer -->
+                <footer class="bg-[#1a1612] text-white mt-2">
+                    <div class="px-5 py-4 text-center">
+                        <p class="text-[9px] text-[#7a6a56]">© 2026 tract — earth-conscious expedition goods</p>
+                    </div>
+                </footer>
+            </div>
+        </div>
+    </div>
+    <script src="./js/script.js"></script>
+</body>
+
+</html>

@@ -12,7 +12,7 @@
 
     <!-- Font Awesome 6 Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-<link rel="stylesheet" href="./css/style.css">
+
     <style>
         * {
             -webkit-tap-highlight-color: transparent;
@@ -289,144 +289,145 @@
             </div>
 
             <!-- Horizontal Nav -->
-            <!-- ========== SECTION 2: HORIZONTAL NAV ========== -->
             <div id="horizontalNav" class="horizontal-nav">
                 <div class="nav-links-horizontal">
-                    <a href="index.html" class="nav-link-horizontal shop-all" data-nav="shop-all">🏠 Home</a>
-                    <a href="login.html" class="nav-link-horizontal shop-all" data-nav="shop-all">🔐 Login</a>
-                    <a href="register.html" class="nav-link-horizontal shop-all" data-nav="register">📲 Register</a>
-                    <a href="profile.html" class="nav-link-horizontal shop-all" data-nav="profile">👤 Profile</a>
-                    <a href="cart.html" class="nav-link-horizontal shop-all" data-nav="cart">🛒 Cart</a>
-                    <a href="category.html" class="nav-link-horizontal shop-all" data-nav="category">🗂️
-                        Category</a>
-                    <a href="orders.html" class="nav-link-horizontal shop-all" data-nav="orders">📦 Orders</a>
-                    <a href="product.html" class="nav-link-horizontal shop-all" data-nav="product">🛍️ Product</a>
-                    <a href="track-order.html" class="nav-link-horizontal shop-all" data-nav="track-order">🚚
-                        TrackOrder</a>
-                    <a href="delivery-areas.html" class="nav-link-horizontal shop-all"
-                        data-nav="delivery-areas">🗺️Delivery Areas</a>
-                    <div class="nav-link-horizontal" data-nav="sustainable">🎁 Dummy Page</div>
-                    <div class="nav-link-horizontal" data-nav="gifts">🎁 Dummy Page</div>
+                    <a href="index.html" class="nav-link-horizontal shop-all">🏠 Home</a>
+                    <a href="login.html" class="nav-link-horizontal shop-all">🔐 Login</a>
+                    <a href="register.html" class="nav-link-horizontal shop-all">📲 Register</a>
+                    <a href="profile.html" class="nav-link-horizontal shop-all">👤 Profile</a>
+                    <a href="cart.html" class="nav-link-horizontal shop-all">🛒 Cart</a>
+                    <a href="category.html" class="nav-link-horizontal shop-all">🗂️ Category</a>
+                    <a href="orders.html" class="nav-link-horizontal shop-all">📦 Orders</a>
+                    <a href="product.html" class="nav-link-horizontal shop-all">🛍️ Product</a>
+                    <a href="track-order.html" class="nav-link-horizontal shop-all">🚚 TrackOrder</a>
+                    <a href="delivery-areas.html" class="nav-link-horizontal shop-all">🗺️ Delivery Areas</a>
                 </div>
             </div>
 
-            <!-- Product Content -->
+            <!-- Product Content - VERTICAL LAYOUT (Top to Bottom) -->
             <div class="bg-white rounded-b-3xl shadow-xl overflow-hidden mt-0">
                 <div class="p-5 md:p-6">
 
+                    <!-- VERTICAL: Product Gallery (Top) -->
+                    <div class="w-full mb-6">
+                        <!-- Main Image -->
+                        <div
+                            class="main-image-container bg-[#fefaf6] rounded-2xl overflow-hidden border border-[#f0e2d4] mb-3">
+                            <img id="mainProductImage" src="https://picsum.photos/id/20/600/500" alt="Main Product"
+                                class="w-full h-auto object-cover">
+                        </div>
 
-                    <!-- Product Grid -->
-                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                        <!-- Thumbnails -->
+                        <div id="thumbnailContainer" class="flex gap-2 overflow-x-auto pb-2">
+                            <img src="https://picsum.photos/id/20/100/100"
+                                class="thumbnail w-16 h-16 rounded-lg object-cover cursor-pointer border-2 border-[#bc6c25] active"
+                                onclick="changeMainImage(this.src, this)">
+                            <img src="https://picsum.photos/id/30/100/100"
+                                class="thumbnail w-16 h-16 rounded-lg object-cover cursor-pointer border-2 border-transparent hover:border-[#bc6c25]/50 transition"
+                                onclick="changeMainImage(this.src, this)">
+                            <img src="https://picsum.photos/id/35/100/100"
+                                class="thumbnail w-16 h-16 rounded-lg object-cover cursor-pointer border-2 border-transparent hover:border-[#bc6c25]/50 transition"
+                                onclick="changeMainImage(this.src, this)">
+                            <img src="https://picsum.photos/id/42/100/100"
+                                class="thumbnail w-16 h-16 rounded-lg object-cover cursor-pointer border-2 border-transparent hover:border-[#bc6c25]/50 transition"
+                                onclick="changeMainImage(this.src, this)">
+                        </div>
+                    </div>
 
-                        <!-- Left: Product Gallery -->
-                        <div>
-                            <!-- Main Image -->
-                            <div
-                                class="main-image-container bg-[#fefaf6] rounded-2xl overflow-hidden border border-[#f0e2d4] mb-3">
-                                <img id="mainProductImage" src="https://picsum.photos/id/20/600/500" alt="Main Product"
-                                    class="w-full h-auto object-cover">
+                    <!-- VERTICAL: Product Info (Bottom) -->
+                    <div class="w-full space-y-4">
+                        <!-- Product Name -->
+                        <h1 class="text-2xl font-bold text-[#2c241a]">Canvas Rucksack Pro</h1>
+
+                        <!-- Rating -->
+                        <div class="flex items-center gap-2">
+                            <div class="flex gap-0.5">
+                                <i class="fas fa-star text-[#ffd966] text-sm"></i>
+                                <i class="fas fa-star text-[#ffd966] text-sm"></i>
+                                <i class="fas fa-star text-[#ffd966] text-sm"></i>
+                                <i class="fas fa-star text-[#ffd966] text-sm"></i>
+                                <i class="fas fa-star-half-alt text-[#ffd966] text-sm"></i>
                             </div>
+                            <span class="text-xs text-[#8a7a66]">(124 reviews)</span>
+                            <span class="text-xs text-green-600 bg-green-50 px-2 py-0.5 rounded-full">In Stock</span>
+                        </div>
 
-                            <!-- Thumbnails -->
-                            <div id="thumbnailContainer" class="flex gap-2 overflow-x-auto pb-2">
-                                <img src="https://picsum.photos/id/20/100/100"
-                                    class="thumbnail w-16 h-16 rounded-lg object-cover cursor-pointer border-2 border-[#bc6c25] active"
-                                    onclick="changeMainImage(this.src, this)">
-                                <img src="https://picsum.photos/id/30/100/100"
-                                    class="thumbnail w-16 h-16 rounded-lg object-cover cursor-pointer border-2 border-transparent hover:border-[#bc6c25]/50 transition"
-                                    onclick="changeMainImage(this.src, this)">
-                                <img src="https://picsum.photos/id/35/100/100"
-                                    class="thumbnail w-16 h-16 rounded-lg object-cover cursor-pointer border-2 border-transparent hover:border-[#bc6c25]/50 transition"
-                                    onclick="changeMainImage(this.src, this)">
-                                <img src="https://picsum.photos/id/42/100/100"
-                                    class="thumbnail w-16 h-16 rounded-lg object-cover cursor-pointer border-2 border-transparent hover:border-[#bc6c25]/50 transition"
-                                    onclick="changeMainImage(this.src, this)">
+                        <!-- Price -->
+                        <div class="flex items-center gap-3">
+                            <span class="text-3xl font-bold text-[#bc6c25]" id="productPrice">₹6,599</span>
+                            <span class="text-sm text-[#a89882] line-through" id="productMrp">₹8,999</span>
+                            <span class="bg-green-100 text-green-700 text-xs font-semibold px-2 py-0.5 rounded-full">27%
+                                off</span>
+                        </div>
+
+                        <!-- Variant Section: Size -->
+                        <div>
+                            <h3 class="text-sm font-semibold text-[#2c241a] mb-2">Select Size</h3>
+                            <div class="flex flex-wrap gap-2">
+                                <button
+                                    class="size-btn variant-btn px-4 py-2 rounded-full text-sm border border-[#e8e2db] bg-white text-[#2c241a] hover:border-[#bc6c25] transition active"
+                                    data-size="S">S</button>
+                                <button
+                                    class="size-btn variant-btn px-4 py-2 rounded-full text-sm border border-[#e8e2db] bg-white text-[#2c241a] hover:border-[#bc6c25] transition"
+                                    data-size="M">M</button>
+                                <button
+                                    class="size-btn variant-btn px-4 py-2 rounded-full text-sm border border-[#e8e2db] bg-white text-[#2c241a] hover:border-[#bc6c25] transition"
+                                    data-size="L">L</button>
+                                <button
+                                    class="size-btn variant-btn px-4 py-2 rounded-full text-sm border border-[#e8e2db] bg-white text-[#2c241a] hover:border-[#bc6c25] transition"
+                                    data-size="XL">XL</button>
+                                <button
+                                    class="size-btn variant-btn px-4 py-2 rounded-full text-sm border border-[#e8e2db] bg-white text-[#2c241a] hover:border-[#bc6c25] transition"
+                                    data-size="XXL">XXL</button>
                             </div>
                         </div>
 
-                        <!-- Right: Product Info -->
-                        <div class="space-y-4">
-                            <!-- Product Name -->
-                            <h1 class="text-2xl font-bold text-[#2c241a]">Canvas Rucksack Pro</h1>
-
-                            <!-- Rating -->
-                            <div class="flex items-center gap-2">
-                                <div class="flex gap-0.5">
-                                    <i class="fas fa-star text-[#ffd966] text-sm"></i>
-                                    <i class="fas fa-star text-[#ffd966] text-sm"></i>
-                                    <i class="fas fa-star text-[#ffd966] text-sm"></i>
-                                    <i class="fas fa-star text-[#ffd966] text-sm"></i>
-                                    <i class="fas fa-star-half-alt text-[#ffd966] text-sm"></i>
-                                </div>
-                                <span class="text-xs text-[#8a7a66]">(124 reviews)</span>
-                                <span class="text-xs text-green-600 bg-green-50 px-2 py-0.5 rounded-full">In
-                                    Stock</span>
+                        <!-- Variant Section: Color -->
+                        <div>
+                            <h3 class="text-sm font-semibold text-[#2c241a] mb-2">Select Color</h3>
+                            <div class="flex flex-wrap gap-3">
+                                <button class="color-btn w-8 h-8 rounded-full border-2 border-[#bc6c25] transition"
+                                    data-color="Black" style="background: #1a1a1a;"></button>
+                                <button
+                                    class="color-btn w-8 h-8 rounded-full border-2 border-transparent hover:border-[#bc6c25] transition"
+                                    data-color="Olive Green" style="background: #4a5d23;"></button>
+                                <button
+                                    class="color-btn w-8 h-8 rounded-full border-2 border-transparent hover:border-[#bc6c25] transition"
+                                    data-color="Tan" style="background: #c2a575;"></button>
+                                <button
+                                    class="color-btn w-8 h-8 rounded-full border-2 border-transparent hover:border-[#bc6c25] transition"
+                                    data-color="Navy Blue" style="background: #1e2a4f;"></button>
                             </div>
+                            <p id="selectedColorText" class="text-[10px] text-[#8a7a66] mt-2">Selected: Black</p>
+                        </div>
 
-                            <!-- Price -->
+                        <!-- Quantity Selector -->
+                        <div>
+                            <h3 class="text-sm font-semibold text-[#2c241a] mb-2">Quantity</h3>
                             <div class="flex items-center gap-3">
-                                <span class="text-3xl font-bold text-[#bc6c25]" id="productPrice">₹6,599</span>
-                                <span class="text-sm text-[#a89882] line-through" id="productMrp">₹8,999</span>
-                                <span
-                                    class="bg-green-100 text-green-700 text-xs font-semibold px-2 py-0.5 rounded-full">27%
-                                    off</span>
+                                <button id="qtyDecrease"
+                                    class="qty-btn w-8 h-8 rounded-full border border-[#e8e2db] bg-white text-[#5e4b38] flex items-center justify-center">−</button>
+                                <span id="qtyValue" class="text-base font-semibold w-8 text-center">1</span>
+                                <button id="qtyIncrease"
+                                    class="qty-btn w-8 h-8 rounded-full border border-[#e8e2db] bg-white text-[#5e4b38] flex items-center justify-center">+</button>
+                                <span class="text-xs text-[#8a7a66]">(Max 10)</span>
                             </div>
+                        </div>
 
-                            <!-- Variant Section: Size -->
-                            <div>
-                                <h3 class="text-sm font-semibold text-[#2c241a] mb-2">Select Size</h3>
-                                <div class="flex flex-wrap gap-2">
-                                    <button
-                                        class="size-btn variant-btn px-4 py-2 rounded-full text-sm border border-[#e8e2db] bg-white text-[#2c241a] hover:border-[#bc6c25] transition active"
-                                        data-size="S">S</button>
-                                    <button
-                                        class="size-btn variant-btn px-4 py-2 rounded-full text-sm border border-[#e8e2db] bg-white text-[#2c241a] hover:border-[#bc6c25] transition"
-                                        data-size="M">M</button>
-                                    <button
-                                        class="size-btn variant-btn px-4 py-2 rounded-full text-sm border border-[#e8e2db] bg-white text-[#2c241a] hover:border-[#bc6c25] transition"
-                                        data-size="L">L</button>
-                                    <button
-                                        class="size-btn variant-btn px-4 py-2 rounded-full text-sm border border-[#e8e2db] bg-white text-[#2c241a] hover:border-[#bc6c25] transition"
-                                        data-size="XL">XL</button>
-                                    <button
-                                        class="size-btn variant-btn px-4 py-2 rounded-full text-sm border border-[#e8e2db] bg-white text-[#2c241a] hover:border-[#bc6c25] transition"
-                                        data-size="XXL">XXL</button>
-                                </div>
-                            </div>
+                        <!-- Stock Status -->
+                        <div class="flex items-center gap-2 text-sm">
+                            <i class="fas fa-check-circle text-green-500"></i>
+                            <span class="text-green-600 font-medium">In Stock</span>
+                            <span class="text-[#8a7a66] text-xs">| Free shipping on orders over ₹5000</span>
+                        </div>
 
-                            <!-- Variant Section: Color -->
-                            <div>
-                                <h3 class="text-sm font-semibold text-[#2c241a] mb-2">Select Color</h3>
-                                <div class="flex flex-wrap gap-3">
-                                    <button class="color-btn w-8 h-8 rounded-full border-2 border-[#bc6c25] transition"
-                                        data-color="Black" style="background: #1a1a1a;"></button>
-                                    <button
-                                        class="color-btn w-8 h-8 rounded-full border-2 border-transparent hover:border-[#bc6c25] transition"
-                                        data-color="Olive Green" style="background: #4a5d23;"></button>
-                                    <button
-                                        class="color-btn w-8 h-8 rounded-full border-2 border-transparent hover:border-[#bc6c25] transition"
-                                        data-color="Tan" style="background: #c2a575;"></button>
-                                    <button
-                                        class="color-btn w-8 h-8 rounded-full border-2 border-transparent hover:border-[#bc6c25] transition"
-                                        data-color="Navy Blue" style="background: #1e2a4f;"></button>
-                                </div>
-                                <p id="selectedColorText" class="text-[10px] text-[#8a7a66] mt-2">Selected: Black</p>
-                            </div>
-
-
-                            <!-- Stock Status -->
-                            <div class="flex items-center gap-2 text-sm">
-                                <i class="fas fa-check-circle text-green-500"></i>
-                                <span class="text-green-600 font-medium">In Stock</span>
-                                <span class="text-[#8a7a66] text-xs">| Free shipping on orders over ₹5000</span>
-                            </div>
-
-                            <!-- Action Buttons -->
-                            <div class="flex gap-3 pt-2">
-                                <button id="addToCartBtn"
-                                    class="flex-1 bg-gradient-to-r from-[#bc6c25] to-[#e8a735] text-white py-3 rounded-full font-bold text-sm shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-2">
-                                    <i class="fas fa-shopping-cart text-xs"></i> Add to Cart
-                                </button>
+                        <!-- Action Buttons -->
+                        <div class="flex flex-col sm:flex-row gap-3 pt-2">
+                            <button id="addToCartBtn"
+                                class="flex-1 bg-gradient-to-r from-[#bc6c25] to-[#e8a735] text-white py-3 rounded-full font-bold text-sm shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-2">
+                                <i class="fas fa-shopping-cart text-xs"></i> Add to Cart
+                            </button>
+                            <div class="flex gap-3">
                                 <button id="wishlistBtn"
                                     class="w-12 h-12 rounded-full border border-[#e8e2db] bg-white text-[#8a7a66] hover:text-red-500 hover:border-red-500 transition flex items-center justify-center">
                                     <i class="far fa-heart"></i>
@@ -437,25 +438,28 @@
                                     <i class="fas fa-flag"></i>
                                 </button>
                             </div>
+                        </div>
 
-                            <!-- Product Description -->
-                            <div class="border-t border-[#f0e2d4] pt-4 mt-2">
-                                <h3 class="font-semibold text-[#2c241a] mb-2">Description</h3>
-                                <p class="text-sm text-[#6b5a48] leading-relaxed">
-                                    The Canvas Rucksack Pro is a premium, earth-conscious backpack crafted from
-                                    sustainable materials.
-                                    Designed for the modern adventurer, it features multiple compartments, padded laptop
-                                    sleeve,
-                                    water-resistant coating, and ergonomic shoulder straps for all-day comfort.
-                                </p>
-                            </div>
+                        <!-- Product Description -->
+                        <div class="border-t border-[#f0e2d4] pt-4 mt-2">
+                            <h3 class="font-semibold text-[#2c241a] mb-2">Description</h3>
+                            <p class="text-sm text-[#6b5a48] leading-relaxed">
+                                The Canvas Rucksack Pro is a premium, earth-conscious backpack crafted from sustainable
+                                materials.
+                                Designed for the modern adventurer, it features multiple compartments, padded laptop
+                                sleeve,
+                                water-resistant coating, and ergonomic shoulder straps for all-day comfort.
+                            </p>
                         </div>
                     </div>
 
                     <!-- Customers Also Bought Section -->
                     <div class="mt-8 pt-4 border-t border-[#f0e2d4]">
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="text-lg font-bold text-[#2c241a]">Customers Also Bought</h3>
+                            <a href="category.html" class="text-xs text-[#bc6c25] font-semibold">View All →</a>
+                        </div>
                         <div class="grid grid-cols-3 gap-3">
-                            <!-- Product 1 -->
                             <div class="bg-white rounded-xl overflow-hidden border border-[#f0e2d4] hover:shadow-md transition cursor-pointer"
                                 onclick="window.location.href='product.html'">
                                 <img src="https://picsum.photos/id/30/200/150" alt="Product"
@@ -465,7 +469,6 @@
                                     <p class="text-[#bc6c25] font-bold text-xs">₹6,599</p>
                                 </div>
                             </div>
-                            <!-- Product 2 -->
                             <div class="bg-white rounded-xl overflow-hidden border border-[#f0e2d4] hover:shadow-md transition cursor-pointer"
                                 onclick="window.location.href='product.html'">
                                 <img src="https://picsum.photos/id/35/200/150" alt="Product"
@@ -475,7 +478,6 @@
                                     <p class="text-[#bc6c25] font-bold text-xs">₹6,699</p>
                                 </div>
                             </div>
-                            <!-- Product 3 -->
                             <div class="bg-white rounded-xl overflow-hidden border border-[#f0e2d4] hover:shadow-md transition cursor-pointer"
                                 onclick="window.location.href='product.html'">
                                 <img src="https://picsum.photos/id/99/200/150" alt="Product"
@@ -489,6 +491,7 @@
                     </div>
 
                 </div>
+
 
                 <!-- ========== SECTION 11: FOOTER ========== -->
                 <footer class="bg-[#1a1612] text-white mt-4">
@@ -588,6 +591,27 @@
             element.classList.add('border-[#bc6c25]', 'active');
         }
 
+        // Quantity Selector
+        let quantity = 1;
+        const qtyValue = document.getElementById('qtyValue');
+        const qtyDecrease = document.getElementById('qtyDecrease');
+        const qtyIncrease = document.getElementById('qtyIncrease');
+
+        qtyDecrease?.addEventListener('click', () => {
+            if (quantity > 1) {
+                quantity--;
+                qtyValue.innerText = quantity;
+            }
+        });
+
+        qtyIncrease?.addEventListener('click', () => {
+            if (quantity < 10) {
+                quantity++;
+                qtyValue.innerText = quantity;
+            } else {
+                toast.show('Maximum 10 items allowed');
+            }
+        });
 
         // Size Selection
         let selectedSize = 'S';
@@ -618,6 +642,15 @@
             });
         });
 
+        // Add to Cart
+        document.getElementById('addToCartBtn')?.addEventListener('click', () => {
+            toast.show(`✓ Added to cart! (Size: ${selectedSize}, Color: ${selectedColor}, Qty: ${quantity})`);
+
+            let cart = JSON.parse(localStorage.getItem('tract_cart') || '[]');
+            cart.push({ id: Date.now(), name: 'Canvas Rucksack Pro', price: 6599, quantity: quantity, size: selectedSize, color: selectedColor });
+            localStorage.setItem('tract_cart', JSON.stringify(cart));
+        });
+
         // Wishlist
         document.getElementById('wishlistBtn')?.addEventListener('click', function () {
             const icon = this.querySelector('i');
@@ -630,6 +663,11 @@
                 icon.classList.add('far');
                 toast.show('Removed from wishlist');
             }
+        });
+
+        // Report Button
+        document.getElementById('reportBtn')?.addEventListener('click', () => {
+            toast.show('📋 Report submitted. Our team will review it shortly.');
         });
 
         // Burger Menu
@@ -666,7 +704,7 @@
             });
         });
     </script>
-     <script src="./js/script.js"></script>
+    <script src="./js/script.js"></script>
 </body>
 
 </html>

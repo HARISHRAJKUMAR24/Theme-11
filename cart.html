@@ -192,6 +192,8 @@
             white-space: nowrap;
             backdrop-filter: blur(4px);
             border: 1px solid rgba(255, 217, 102, 0.2);
+            text-decoration: none;
+            display: inline-block;
         }
 
         .nav-link-horizontal.shop-all {
@@ -290,90 +292,87 @@
             <!-- ========== SECTION 2: HORIZONTAL NAV ========== -->
             <div id="horizontalNav" class="horizontal-nav">
                 <div class="nav-links-horizontal">
-                    <a href="index.html" class="nav-link-horizontal shop-all" data-nav="shop-all">🏠 Home</a>
-                    <a href="login.html" class="nav-link-horizontal shop-all" data-nav="shop-all">🔐 Login</a>
-                    <a href="register.html" class="nav-link-horizontal shop-all" data-nav="register">📲 Register</a>
-                    <a href="profile.html" class="nav-link-horizontal shop-all" data-nav="profile">👤 Profile</a>
-                    <a href="cart.html" class="nav-link-horizontal shop-all" data-nav="cart">🛒 Cart</a>
-                    <a href="category.html" class="nav-link-horizontal shop-all" data-nav="category">🗂️
-                        Category</a>
-                    <a href="orders.html" class="nav-link-horizontal shop-all" data-nav="orders">📦 Orders</a>
-                    <a href="product.html" class="nav-link-horizontal shop-all" data-nav="product">🛍️ Product</a>
-                    <a href="track-order.html" class="nav-link-horizontal shop-all" data-nav="track-order">🚚
-                        TrackOrder</a>
-                    <a href="delivery-areas.html" class="nav-link-horizontal shop-all"
-                        data-nav="delivery-areas">🗺️Delivery Areas</a>
-                    <div class="nav-link-horizontal" data-nav="sustainable">🎁 Dummy Page</div>
-                    <div class="nav-link-horizontal" data-nav="gifts">🎁 Dummy Page</div>
+                    <a href="index.html" class="nav-link-horizontal shop-all">🏠 Home</a>
+                    <a href="login.html" class="nav-link-horizontal shop-all">🔐 Login</a>
+                    <a href="register.html" class="nav-link-horizontal shop-all">📲 Register</a>
+                    <a href="profile.html" class="nav-link-horizontal shop-all">👤 Profile</a>
+                    <a href="cart.html" class="nav-link-horizontal shop-all">🛒 Cart</a>
+                    <a href="category.html" class="nav-link-horizontal shop-all">🗂️ Category</a>
+                    <a href="orders.html" class="nav-link-horizontal shop-all">📦 Orders</a>
+                    <a href="product.html" class="nav-link-horizontal shop-all">🛍️ Product</a>
+                    <a href="track-order.html" class="nav-link-horizontal shop-all">🚚 TrackOrder</a>
+                    <a href="delivery-areas.html" class="nav-link-horizontal shop-all">🗺️ Delivery Areas</a>
                 </div>
             </div>
 
-            <!-- Cart Content -->
+            <!-- Cart Content - VERTICAL LAYOUT (Top to Bottom) -->
             <div class="bg-white rounded-b-3xl shadow-xl overflow-hidden mt-0">
                 <div class="p-5 md:p-6">
-                    <div class="flex items-center gap-3 mb-5">
+
+                    <!-- Cart Header -->
+                    <div class="flex items-center gap-3 mb-5 pb-2 border-b border-[#f0e2d4]">
                         <i class="fas fa-shopping-cart text-[#bc6c25] text-2xl"></i>
                         <h1 class="text-2xl font-bold text-[#2c241a]">Your Cart</h1>
                         <span id="cartItemCount"
                             class="bg-[#bc6c25] text-white text-xs rounded-full px-2 py-0.5">0</span>
                     </div>
 
-                    <div class="flex flex-col lg:flex-row gap-6">
-                        <!-- Cart Items Section -->
-                        <div class="w-full lg:w-7/12">
-                            <div id="cartItemsList" class="space-y-3">
-                                <!-- Cart items will be injected here -->
-                                <div class="text-center py-10 text-[#8a7a66]">
-                                    <i class="fas fa-bag-shopping text-4xl mb-3 opacity-50"></i>
-                                    <p>Your cart is empty</p>
-                                    <a href="index.html"
-                                        class="inline-block mt-3 text-[#bc6c25] text-sm font-semibold">Continue Shopping
-                                        →</a>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Summary Section -->
-                        <div class="w-full lg:w-5/12">
-                            <div class="cart-card p-5 sticky top-24">
-                                <h3 class="font-bold text-lg text-[#2c241a] mb-4 pb-2 border-b border-[#f0e2d4]">
-                                    <i class="fas fa-receipt text-[#bc6c25] mr-2"></i>Order Summary
-                                </h3>
-
-                                <div class="space-y-3">
-                                    <div class="flex justify-between text-sm">
-                                        <span class="text-[#6b5a48]">Subtotal</span>
-                                        <span id="subtotalAmount" class="font-semibold text-[#2c241a]">₹0.00</span>
-                                    </div>
-                                    <div class="flex justify-between text-sm">
-                                        <span class="text-[#6b5a48]">Tax (GST 5%)</span>
-                                        <span id="taxAmount" class="font-semibold text-[#2c241a]">₹0.00</span>
-                                    </div>
-                                    <div class="flex justify-between text-sm">
-                                        <span class="text-[#6b5a48]">Discount</span>
-                                        <span id="discountAmount" class="font-semibold text-green-600">₹0.00</span>
-                                    </div>
-                                    <div class="border-t border-dashed border-[#e8e2db] my-2"></div>
-                                    <div class="flex justify-between text-base font-bold">
-                                        <span class="text-[#2c241a]">Total (INR)</span>
-                                        <span id="totalAmount" class="text-[#bc6c25] text-xl">₹0.00</span>
-                                    </div>
-                                </div>
-
-                                <button id="checkoutBtn"
-                                    class="checkout-btn w-full rounded-full py-3.5 text-white font-bold text-sm shadow-md flex items-center justify-center gap-2 transition-all mt-5">
-                                    <i class="fas fa-credit-card text-xs"></i> Proceed to Checkout
-                                </button>
-
-                                <p class="text-[9px] text-center text-[#a89882] mt-3">
-                                    <i class="fas fa-shield-alt text-[#bc6c25] mr-1"></i> Secure payment · Free shipping
-                                    on orders over ₹5000
-                                </p>
+                    <!-- VERTICAL: Cart Items Section (Top) -->
+                    <div class="w-full mb-6">
+                        <div id="cartItemsList" class="space-y-3">
+                            <!-- Cart items will be injected here -->
+                            <div class="text-center py-10 text-[#8a7a66]">
+                                <i class="fas fa-bag-shopping text-4xl mb-3 opacity-50"></i>
+                                <p>Your cart is empty</p>
+                                <a href="index.html"
+                                    class="inline-block mt-3 text-[#bc6c25] text-sm font-semibold">Continue Shopping
+                                    →</a>
                             </div>
                         </div>
                     </div>
+
+                    <!-- VERTICAL: Order Summary Section (Bottom) -->
+                    <div class="w-full">
+                        <div class="cart-card p-5">
+                            <h3 class="font-bold text-lg text-[#2c241a] mb-4 pb-2 border-b border-[#f0e2d4]">
+                                <i class="fas fa-receipt text-[#bc6c25] mr-2"></i>Order Summary
+                            </h3>
+
+                            <div class="space-y-3">
+                                <div class="flex justify-between text-sm">
+                                    <span class="text-[#6b5a48]">Subtotal</span>
+                                    <span id="subtotalAmount" class="font-semibold text-[#2c241a]">₹0.00</span>
+                                </div>
+                                <div class="flex justify-between text-sm">
+                                    <span class="text-[#6b5a48]">Tax (GST 5%)</span>
+                                    <span id="taxAmount" class="font-semibold text-[#2c241a]">₹0.00</span>
+                                </div>
+                                <div class="flex justify-between text-sm">
+                                    <span class="text-[#6b5a48]">Discount</span>
+                                    <span id="discountAmount" class="font-semibold text-green-600">₹0.00</span>
+                                </div>
+                                <div class="border-t border-dashed border-[#e8e2db] my-2"></div>
+                                <div class="flex justify-between text-base font-bold">
+                                    <span class="text-[#2c241a]">Total (INR)</span>
+                                    <span id="totalAmount" class="text-[#bc6c25] text-xl">₹0.00</span>
+                                </div>
+                            </div>
+
+                            <button id="checkoutBtn"
+                                class="checkout-btn w-full rounded-full py-3.5 text-white font-bold text-sm shadow-md flex items-center justify-center gap-2 transition-all mt-5">
+                                <i class="fas fa-credit-card text-xs"></i> Proceed to Checkout
+                            </button>
+
+                            <p class="text-[9px] text-center text-[#a89882] mt-3">
+                                <i class="fas fa-shield-alt text-[#bc6c25] mr-1"></i> Secure payment · Free shipping on
+                                orders over ₹5000
+                            </p>
+                        </div>
+                    </div>
+
                 </div>
 
+                <!-- Footer -->
                 <!-- ========== SECTION 11: FOOTER ========== -->
                 <footer class="bg-[#1a1612] text-white mt-4">
                     <div class="px-5 py-6">
@@ -450,10 +449,11 @@
             show(message, type = 'success', duration = 2500) {
                 const toast = document.createElement('div');
                 toast.className = `toast-message toast-${type}`;
-                toast.innerHTML = `<i class="fas fa-check-circle"></i><span>${message}</span><div class="toast-progress"></div>`;
+                toast.innerHTML = `<i class="fas fa-check-circle"></i><span>${message}</span>`;
                 this.container.appendChild(toast);
                 setTimeout(() => {
-                    toast.classList.add('hide-toast');
+                    toast.style.opacity = '0';
+                    toast.style.transform = 'translateY(10px)';
                     setTimeout(() => toast.remove(), 300);
                 }, duration);
                 return toast;
@@ -462,7 +462,7 @@
         }
         const toast = new TractToast();
 
-        // ========== CART DATA (demo products) ==========
+        // ========== CART DATA ==========
         let cartItems = [
             { id: "1", name: "Field Knife", price: 3899.99, quantity: 1, image: "https://picsum.photos/id/20/100/100", variant: null },
             { id: "canvas_rucksack_M_Black", name: "Canvas Rucksack", price: 6599.00, quantity: 1, image: "https://picsum.photos/id/30/100/100", variant: { size: "M", color: "Black" } },
@@ -472,15 +472,13 @@
         let appliedDiscount = 0;
         let discountPercent = 0;
 
-        // Currency formatter
         function formatPrice(price) {
             return '₹' + price.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
         }
 
-        // Calculate totals
         function calculateTotals() {
             const subtotal = cartItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-            const tax = subtotal * 0.05; // 5% GST
+            const tax = subtotal * 0.05;
             let discount = 0;
             if (discountPercent > 0) {
                 discount = subtotal * (discountPercent / 100);
@@ -489,7 +487,6 @@
             return { subtotal, tax, discount, total };
         }
 
-        // Update summary UI
         function updateSummary() {
             const { subtotal, tax, discount, total } = calculateTotals();
             document.getElementById('subtotalAmount').innerText = formatPrice(subtotal);
@@ -500,7 +497,16 @@
             document.getElementById('cartItemCount').innerText = totalItems;
         }
 
-        // Render cart items
+        function escapeHtml(str) {
+            if (!str) return '';
+            return str.replace(/[&<>]/g, function (m) {
+                if (m === '&') return '&amp;';
+                if (m === '<') return '&lt;';
+                if (m === '>') return '&gt;';
+                return m;
+            });
+        }
+
         function renderCartItems() {
             const container = document.getElementById('cartItemsList');
             if (!cartItems.length) {
@@ -538,20 +544,19 @@
                 </div>
             `).join('');
 
-            // Attach event listeners
             document.querySelectorAll('.remove-item').forEach(btn => {
-                btn.addEventListener('click', (e) => {
+                btn.addEventListener('click', () => {
                     const id = btn.getAttribute('data-id');
                     cartItems = cartItems.filter(item => item.id !== id);
                     renderCartItems();
                     updateSummary();
-                    toast.success('Item removed from cart');
                     saveCartToLocal();
+                    toast.success('Item removed from cart');
                 });
             });
 
             document.querySelectorAll('.qty-incr').forEach(btn => {
-                btn.addEventListener('click', (e) => {
+                btn.addEventListener('click', () => {
                     const id = btn.getAttribute('data-id');
                     const item = cartItems.find(i => i.id === id);
                     if (item) {
@@ -564,7 +569,7 @@
             });
 
             document.querySelectorAll('.qty-decr').forEach(btn => {
-                btn.addEventListener('click', (e) => {
+                btn.addEventListener('click', () => {
                     const id = btn.getAttribute('data-id');
                     const item = cartItems.find(i => i.id === id);
                     if (item && item.quantity > 1) {
@@ -576,29 +581,17 @@
                         cartItems = cartItems.filter(i => i.id !== id);
                         renderCartItems();
                         updateSummary();
-                        toast.success('Item removed');
                         saveCartToLocal();
+                        toast.success('Item removed');
                     }
                 });
             });
         }
 
-        function escapeHtml(str) {
-            if (!str) return '';
-            return str.replace(/[&<>]/g, function (m) {
-                if (m === '&') return '&amp;';
-                if (m === '<') return '&lt;';
-                if (m === '>') return '&gt;';
-                return m;
-            });
-        }
-
-        // Save to localStorage
         function saveCartToLocal() {
             localStorage.setItem('tract_cart', JSON.stringify(cartItems));
         }
 
-        // Load cart from localStorage
         function loadCartFromLocal() {
             const saved = localStorage.getItem('tract_cart');
             if (saved) {
@@ -612,8 +605,7 @@
             renderCartItems();
             updateSummary();
         }
-
-        // ========== BURGER MENU ==========
+        // Burger Menu
         function initBurgerMenu() {
             const burger = document.getElementById('burgerMenuBtn');
             const nav = document.getElementById('horizontalNav');
@@ -638,15 +630,12 @@
             });
         }
 
-        // ========== INIT ==========
+        // Initialize
         document.addEventListener('DOMContentLoaded', () => {
             initBurgerMenu();
             loadCartFromLocal();
 
 
-
-
-            // Checkout button
             document.getElementById('checkoutBtn')?.addEventListener('click', () => {
                 if (cartItems.length === 0) {
                     toast.success('Your cart is empty! Add some items');
@@ -656,7 +645,6 @@
                 alert(`🛍️ Order Summary\n\nSubtotal: ${formatPrice(subtotal)}\nTax: ${formatPrice(tax)}\nDiscount: ${formatPrice(discount)}\nTotal: ${formatPrice(total)}\n\nThank you for shopping at Tract! 🌱`);
             });
 
-            // Profile button
             document.getElementById('profileBtn')?.addEventListener('click', () => {
                 window.location.href = 'profile.html';
             });
